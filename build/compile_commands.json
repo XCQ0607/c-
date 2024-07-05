@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/cloudide/workspace/C/build",
+  "command": "/usr/bin/g++   -g -std=gnu++17 -o CMakeFiles/main.dir/main.cpp.o -c /cloudide/workspace/C/main.cpp",
+  "file": "/cloudide/workspace/C/main.cpp"
+}
+]

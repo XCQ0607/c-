@@ -1,0 +1,3 @@
+/cloudide/workspace/C/build/CMakeFiles/rebuild_cache.dir
+/cloudide/workspace/C/build/CMakeFiles/edit_cache.dir
+/cloudide/workspace/C/build/CMakeFiles/main.dir

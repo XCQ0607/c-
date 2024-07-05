@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cloudide/workspace/C/learn.cpp
+iostream
+-
+thread
+-
+limits
+-
+
+/cloudide/workspace/C/main.cpp
+iostream
+-
+learn.cpp
+/cloudide/workspace/C/learn.cpp
+

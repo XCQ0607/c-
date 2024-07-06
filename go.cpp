@@ -45,6 +45,41 @@ vector<int> inorderTraversal(TreeNode* root) {
     dfs(root);
     return ans;
 }
-    
+//--------------------------------------------------------------
+//235
+// struct TreeNode {
+//      int val;
+//      TreeNode *left;
+//      TreeNode *right;
+//      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+//  };
+    TreeNode* BSTAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (p->val < root->val && q->val < root->val) { // 都在左子树中,通过条件可以知道p和q都在左子树中
+             return BSTAncestor(root->left, p, q);
+         }
+         else if (p->val > root->val && q->val > root->val) {
+             return BSTAncestor(root->right, p, q);
+         }
+         else {
+             return root;
+         }
+    }
+    //普通二叉树
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    // Base case: If root is null or root is one of p or q, return root
+    if (!root || root == p || root == q) {
+        return root;
+    }
+    // Recursively search left and right subtrees
+    TreeNode* leftLCA = lowestCommonAncestor(root->left, p, q);
+    TreeNode* rightLCA = lowestCommonAncestor(root->right, p, q);
+    // If both left and right subtrees return non-null, root is the LCA
+    if (leftLCA && rightLCA) {
+        return root;
+    }
+    // Otherwise, return non-null subtree result
+    return (leftLCA != nullptr) ? leftLCA : rightLCA;
+}
+//--------------------------------------------------------------
 
 

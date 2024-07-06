@@ -111,22 +111,59 @@ void range1(){
     cout << "正常调用worknow : " << worknow << endl;
 }
 //-------------------------------
+// 全局变量，具有外部链接，默认存储类为extern
+int globalVar;
+void function1() {
+    // 静态变量，具有静态存储期，生命周期贯穿整个程序
+    static int staticVar = 20;
+    const int constVar = 30; // const变量默认具有static存储期
+    // 尝试修改const变量，编译错误
+    // constVar = 40;
+    // mutable成员变量，可以在const成员函数中修改
+    class MyClass {
+    public:
+        mutable int mutableVar;
 
+        void constMemberFunc() const {
+            mutableVar = 50; // 允许修改mutable成员变量
+        }
+    };
+    // 线程局部变量，每个线程有自己的独立副本
+    thread_local int threadVar = 60;
+}
 
+void main0() {
+    extern int externalVar; // 声明具有外部链接的变量
+    function1();
+}
 
-
-
-
-
-
-
-
-
+//--------------------------------
+class MyType {
+public:
+    MyType(int value) : data(value){}
+    int getData() const { return data; }
+    // 这里加 const，表示这个转型操作符函数不会修改对象的状态，即它是一个常量成员函数
+    operator int() const { return data; }       
+private:
+    int data;
+};
+void gogo() {
+    // 直接初始化
+    MyType obj1(42);    //调用构造函数
+    // 复制初始化
+    MyType obj2 = 42;
+    int hh = obj2;  //调用类的operator int()
+    // 调用成员函数获取数据
+    std::cout << "obj1 data: " << obj1.getData() << std::endl;
+    std::cout << "obj2 data: " << obj2.getData() << std::endl;
+}
+//--------------------------------
 void go() {
     // c();       
-     X x;
-     x.hello();
+    //  X x;
+    //  x.hello();
     // x.data();
     //range();    range1();
-
+    main0();
+    gogo();
 }

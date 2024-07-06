@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/cloudide/workspace/C/go.cpp
+vector
+-
+functional
+-
+
 /cloudide/workspace/C/learn.cpp
 iostream
 -
@@ -19,4 +25,6 @@ iostream
 -
 learn.cpp
 /cloudide/workspace/C/learn.cpp
+go.cpp
+/cloudide/workspace/C/go.cpp
 

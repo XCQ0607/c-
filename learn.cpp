@@ -121,6 +121,7 @@ void range1(){
 
 
 
+
 void go() {
     // c();       
      X x;

@@ -87,3 +87,114 @@ int*类型的指针指向const p(针对指针，p指向不变)
 *p = 11;    //合法，
 p = &b;     //编译错误，p是一个const指针，只读，不可变
 const 右边修饰谁，就说明谁是不可变的。
+
+
+1. 类的定义和声明
+在 C++ 中，class 关键字用于定义一个类，后面跟着类的名称（这里是 A）。类的定义可以包括数据成员（称为字段或属性）和成员函数（类中的方法）。例如：
+class A {
+public:
+    // 成员函数声明
+    void method1();
+    int method2(int x);
+
+    // 数据成员
+    int data;
+    double another_data;
+};
+在上面的示例中：
+class A { ... }; 表示类 A 的定义开始和结束。
+public: 是访问说明符（access specifier），它定义了紧随其后的成员的访问权限。public: 意味着接下来的成员可以在类的外部被访问。
+2. 成员函数
+类中的函数称为成员函数。它们可以被类的对象调用，访问对象的数据成员，以及执行特定的操作。例如，上面的 method1() 和 method2(int x) 就是成员函数的声明。
+3. 数据成员
+类中的数据成员是类的对象的一部分，用于存储对象的状态信息。在上面的例子中，int data; 和 double another_data; 是两个数据成员的声明。
+4. 访问控制
+public:、private: 和 protected: 是 C++ 中的三种访问控制关键字。
+public: 表示接下来的成员（包括函数和数据成员）可以在类的外部访问。这是一种最常用的访问控制方式，用于定义类的公共接口。
+private: 表示接下来的成员只能在类的内部访问，外部无法直接访问。这种方式用于隐藏类的实现细节，提高封装性。
+protected: 类似于 private:，但允许派生类（子类）访问这些成员。这种访问控制用于实现继承的概念。
+
+
+
+
+
+C++ 标准库中的 functional 头文件提供了一组函数对象（或者称为函数子类型）的类模板，这些函数对象可以用作函数指针的替代，或者可以作为参数传递给标准库中的算法。让我们详细讲解几个常用的函数对象及其用途：
+
+1. std::function
+std::function 是一个通用的函数封装器，可以用来包装任何可以调用的目标：函数、函数指针、成员函数指针、lambda 表达式等。它提供了一种类型安全的方式来存储、复制、和调用可调用对象。例如：
+void foo(int x) {
+    std::cout << "foo: " << x << std::endl;
+}
+
+int main() {
+    std::function<void(int)> func = foo;
+    func(42); // 调用 foo 函数
+    
+    func = [](int x) { std::cout << "lambda: " << x << std::endl; };
+    func(10); // 调用 lambda 表达式
+    
+    return 0;
+}
+2. std::bind
+std::bind 可以创建一个新的可调用对象，该对象是通过对给定函数对象、函数指针或成员函数指针的参数进行绑定而生成的。它可以用来部分应用参数或者重新排列参数顺序。例如：
+void foo(int a, int b) {
+    std::cout << "foo: " << a << ", " << b << std::endl;
+}
+
+int main() {
+    auto func1 = std::bind(foo, 1, 2);
+    func1(); // 调用 foo(1, 2)
+
+    auto func2 = std::bind(foo, std::placeholders::_2, std::placeholders::_1);
+    func2(3, 4); // 调用 foo(4, 3)
+
+    return 0;
+}
+3. std::plus, std::minus, std::multiplies, std::divides
+这些函数对象分别对应于加法、减法、乘法和除法操作。它们可以作为参数传递给标准库中的算法，或者在需要函数对象时进行使用。例如：
+int main() {
+    std::cout << "std::plus(3, 5): " << std::plus<int>()(3, 5) << std::endl;
+    std::cout << "std::minus(3, 5): " << std::minus<int>()(3, 5) << std::endl;
+    std::cout << "std::multiplies(3, 5): " << std::multiplies<int>()(3, 5) << std::endl;
+    std::cout << "std::divides(3, 5): " << std::divides<int>()(3, 5) << std::endl;
+
+    return 0;
+}
+4. std::greater, std::less
+这些函数对象用于比较两个值的大小，分别表示大于和小于的关系。它们可以作为比较函数传递给排序算法等。例如：
+int main() {
+    std::cout << "std::greater<int>()(3, 5): " << std::greater<int>()(3, 5) << std::endl;
+    std::cout << "std::less<int>()(3, 5): " << std::less<int>()(3, 5) << std::endl;
+
+    return 0;
+}
+5. std::logical_and, std::logical_or, std::logical_not
+这些函数对象分别实现逻辑与、逻辑或和逻辑非操作，可以用作逻辑条件的判断。例如：
+int main() {
+    std::cout << "std::logical_and<bool>()(true, false): " << std::logical_and<bool>()(true, false) << std::endl;
+    std::cout << "std::logical_or<bool>()(true, false): " << std::logical_or<bool>()(true, false) << std::endl;
+    std::cout << "std::logical_not<bool>()(true): " << std::logical_not<bool>()(true) << std::endl;
+    }
+
+总结
+C++ 标准库中的 functional 提供了一系列的函数对象，这些对象可以在不同的场景下使用，包括通用的函数封装（std::function）、参数绑定（std::bind）、数学运算（std::plus、std::minus、std::multiplies、std::divides）、比较操作（std::greater、std::less）、逻辑操作（std::logical_and、std::logical_or、std::logical_not）等
+1. std::greater<int>()(3, 5) 中的 ()
+在 std::greater<int>()(3, 5) 中，std::greater<int>() 是一个函数对象（即仿函数或者说是函数子类型），它用于比较两个值的大小。在 C++ 中，函数对象的对象（实例）可以像函数一样被调用，这是通过重载了函数调用运算符 operator() 实现的。
+具体到这个例子，std::greater<int>() 实际上是一个类模板 std::greater 的实例化对象，它接受一个模板参数 int，表示这个函数对象是用来比较 int 类型的值的。当你写 std::greater<int>()(3, 5) 时，实际上是调用了 std::greater<int> 类模板中的 operator()：
+template<typename T>
+struct greater {
+    bool operator()(const T& x, const T& y) const {
+        return x > y;
+    }
+};
+这个 operator() 函数接受两个参数 x 和 y，并返回 x > y 的结果，即比较 x 是否大于 y。因此，std::greater<int>()(3, 5) 实际上会返回 false，因为 3 不大于 5。
+2. func = [](int x) 中的 []
+在 func = [](int x) { ... } 中，[] 是 lambda 表达式的起始标记。Lambda 表达式是 C++11 引入的一种匿名函数的方式，它允许你定义一个可以被调用的匿名函数对象。
+Lambda 表达式的一般形式为：
+[capture](parameters) -> return_type { body }
+[]：这是 lambda 捕获列表（capture list），用于指定在 lambda 表达式中可以使用的外部变量。可以为空（[]），表示不捕获任何外部变量；也可以使用 [&] 或者 [=] 来捕获所有外部变量（引用或者拷贝）。
+(parameters)：这里是 lambda 函数的参数列表，类似于普通函数的参数列表。
+{ body }：这是 lambda 函数的函数体，里面可以包含一系列的语句，用于执行具体的操作。
+例如，对于 func = [](int x) { ... }，它定义了一个 lambda 表达式，该表达式接受一个 int 类型的参数 x，并执行大括号 { ... } 中的操作。
+
+

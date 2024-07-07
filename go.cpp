@@ -81,5 +81,33 @@ vector<int> inorderTraversal(TreeNode* root) {
     return (leftLCA != nullptr) ? leftLCA : rightLCA;
 }
 //--------------------------------------------------------------
+//2515
+// go.cpp
+#include <vector>
+#include <string>
+#include <algorithm>
+int closetTarget(vector<string>& words, string target, int startIndex) {
+    int n = words.size();
+    int minDistance = n;  // 初始化为一个大数
+    bool found = false;
+    
+    for (int i = 0; i < n; ++i) {
+        if (words[i] == target) {
+            found = true;
+            int distance = min(abs(i - startIndex), n - abs(i - startIndex));   //abs是取绝对值
+            minDistance = min(minDistance, distance);
+        }
+    }
+    
+    return found ? minDistance : -1;
+}
+//  (0)->
+// X X X
+// X   X(target)
+// X X X
+// 当startIndex为0：
+// Index为2时的值为target
+// distance为min(abs(2-0),n-abs(2-8))
 
+//--------------------------------------------------------------
 

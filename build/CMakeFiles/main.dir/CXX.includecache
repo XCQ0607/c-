@@ -11,6 +11,12 @@ vector
 -
 functional
 -
+vector
+-
+string
+-
+algorithm
+-
 
 /cloudide/workspace/C/learn.cpp
 iostream

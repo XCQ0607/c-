@@ -198,6 +198,66 @@ Lambda 表达式的一般形式为：
 { body }：这是 lambda 函数的函数体，里面可以包含一系列的语句，用于执行具体的操作。
 例如，对于 func = [](int x) { ... }，它定义了一个 lambda 表达式，该表达式接受一个 int 类型的参数 x，并执行大括号 { ... } 中的操作。
 
+当调用函数时，有三种向函数传递参数的方式：
+调用类型	描述
+1.传值调用	该方法把参数的实际值赋值给函数的形式参数。在这种情况下，修改函数内的形式参数对实际参数没有影响。
+2.指针调用	该方法把参数的地址赋值给形式参数。在函数内，该地址用于访问调用中要用到的实际参数。这意味着，修改形式参数会影响实际参数。
+3.引用调用	该方法把参数的引用赋值给形式参数。在函数内，该引用用于访问调用中要用到的实际参数。这意味着，修改形式参数会影响实际参数。
+   1.void swap(int x, int y);       2.void swap(int *x, int *y);        3.void swap(int &x, int &y) 
+   int a = 100;                                                         
+   int b = 200;                                                         
+    swap(a, b);                      swap(&a, &b);                            swap(a, b);
+*是解引用，可以直接赋值
+&表示地址传递
+[]：这是 lambda 捕获列表（capture list），有=与&两种
+[=] 表明将外部的所有变量拷贝一份到该Lambda函数内部
+[&] 表明将外部的所有变量按引用传递到该Lambda函数内部
+
+例子
+#include <iostream>
+
+int main() {
+    int a = 5;
+    int b = 10;
+
+    // Lambda function with capture, parameters, mutable specifier, return type, and function body
+    auto lambda = [a, &b](int x) mutable -> int {
+        a++; // modify the captured value of a (local copy)
+        b++; // modify the captured reference of b (original variable)
+        return a + b + x;
+    };
+
+    int result = lambda(3);
+
+    std::cout << "Result: " << result << std::endl; // Output: Result: 20
+    std::cout << "a: " << a << ", b: " << b << std::endl; // Output: a: 5, b: 11
+
+    return 0;
+}
+捕捉列表 [a, &b]：a 是按值捕捉的，b 是按引用捕捉的。
+按值捕捉 (a)：a 在 lambda 表达式中是一个局部副本，对 a 的修改不会影响到 main 函数中的 a。
+按引用捕捉 (&b)：b 在 lambda 表达式中是一个引用，对 b 的修改会影响到 main 函数中的 b。
+参数列表 (int x)：定义了一个传入的整型参数 x。
+mutable 修饰符 mutable：允许 lambda 函数体内修改捕捉的按值变量的副本。
+mutable 关键字，lambda 函数将无法修改按值捕捉的变量。按引用捕捉的变量依然可以修改，因为引用捕捉不受 mutable 关键字的影响。
+返回类型 -> int：指定 lambda 函数的返回类型为整型。
+x 是传入的参数 3。
+因此，结果是 6 + 11 + 3 = 20。
+a: 5, b: 11：
+a 没有被修改，因为在 lambda 表达式中使用的是它的副本。
+b 被修改了，因为在 lambda 表达式中使用的是引用。
+[]      // 沒有定义任何变量。使用Lambda函数内未定义的外部变量会引发错误。
+[x, &y] // x以传值方式传入（默认），y以引用方式传入。
+[&]     // 任何被使用到的外部变量都隐式地以引用方式加以引用。
+[=]     // 任何被使用到的外部变量都隐式地以传值方式加以引用。
+[&, x]  // x显式地以传值方式加以引用。其余变量以引用方式加以引用。
+[=, &z] // z显式地以引用方式加以引用。其余变量以传值方式加以引用。
+
+
+
+
+
+
 const	    const定义常量，表示该变量的值不能被修改。
 volatile	修饰符 volatile 告诉该变量的值可能会被程序以外的因素改变，如硬件或其他线程。。
 restrict	由 restrict 修饰的指针是唯一一种访问它所指向的对象的方式。只有 C99 增加了新的类型限定符 restrict。

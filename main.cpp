@@ -4,12 +4,12 @@
 // #include "all.cpp"
 
 
-int main() {
-  // std::cout << "Hello World!\n";
-  go();
-  // X x;
-  // x.hello();
-}
+// int main() {
+//   // std::cout << "Hello World!\n";
+//   go();
+//   // X x;
+//   // x.hello();
+// }
 //-----------------------------------------------
 //3101
 // int main() {
@@ -65,5 +65,26 @@ int main() {
 //     }
 //     return 0;
 // }
+//----------------------------------------------
+//2515
+// main.cpp
+int main() {
+    vector<string> words1 = {"hello", "i", "am", "leetcode", "hello"};
+    string target1 = "hello";
+    int startIndex1 = 1;
+    cout << "Example 1: " << closetTarget(words1, target1, startIndex1) << endl;
+
+    vector<string> words2 = {"a", "b", "leetcode"};
+    string target2 = "leetcode";
+    int startIndex2 = 0;
+    cout << "Example 2: " << closetTarget(words2, target2, startIndex2) << endl;
+
+    vector<string> words3 = {"i", "eat", "leetcode"};
+    string target3 = "ate";
+    int startIndex3 = 0;
+    cout << "Example 3: " << closetTarget(words3, target3, startIndex3) << endl;
+
+    return 0;
+}
 //----------------------------------------------
 

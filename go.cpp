@@ -110,4 +110,48 @@ int closetTarget(vector<string>& words, string target, int startIndex) {
 // distance为min(abs(2-0),n-abs(2-8))
 
 //--------------------------------------------------------------
+//2959
+#include <cstring>
+int numberOfSets(int n, int maxDistance, vector<vector<int>>& roads) {
+    int ans = 0;
+    //主循环讨论情况
+    for (int mask = 0; mask < 1 << n; ++mask) { //1<< n表示2的n次方,是因为1向左位移,空的部分用0填充,所以1<<n表示2的n次方
+        int g[n][n];
+        memset(g, 0x3f, sizeof(g)); //0x3f是一个很大的数，表示无穷大
+        for (auto& e : roads) {
+            int u = e[0], v = e[1], w = e[2];   //e是roads的元素，提取道路的起点 u，终点 v 和道路长度 w。
+            //例如，如果 mask = 001，表示只有分部 2 被关闭。
+            if ((mask >> u & 1) & (mask >> v & 1)) {    //这里的mask >> u & 1表示将mask向右移动u位，然后与1进行按位与操作，得到的结果是一个二进制数，如果该二进制数的最低位为1，则表示mask的第u位为1，否则为0。
+                g[u][v] = min(g[u][v], w);
+                g[v][u] = min(g[v][u], w);
+                //矩阵 g 是一个邻接矩阵，用于存储分部之间的最短路径距离。矩阵 g[i][j] 表示分部 i 到分部 j 之间的最短路径距离。
+            }
+        }
+        //计算最短路径,算法为Floyd-Warshall算法,它们可以计算任意两点之间的最短路径。
+        //mask=011
+        for (int k = 0; k < n; ++k) {
+            if (mask >> k & 1) {
+                g[k][k] = 0;
+                //设置 g[0][0] = 0
+                //设置 g[1][1] = 0
+                for (int i = 0; i < n; ++i) {
+                    for (int j = 0; j < n; ++j) {
+                        g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
+                    }
+                }
+            }
+        }
+        int ok = 1;
+        for (int i = 0; i < n && ok == 1; ++i) {
+            for (int j = 0; j < n && ok == 1; ++j) {
+                if ((mask >> i & 1) & (mask >> j & 1) && g[i][j] > maxDistance) {
+                    ok = 0;
+                }
+            }
+        }
+        ans += ok;
+    }
+    return ans;
+}
+//--------------------------------------------------------------------------
 

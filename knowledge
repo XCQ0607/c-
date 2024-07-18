@@ -651,3 +651,130 @@ const Vector& v：这是一个常量引用，表示要输出的 Vector 对象。
 这是因为 C++ 的运算符重载允许我们定义多个参数的函数。当我们使用 std::cout << v3; 
 这样的语句时，编译器会将其解释为调用 operator<< 函数，并自动传递 std::cout 和 v3 给函数。这种语法使得我们可以通过重载运算符来定义自定义类型的输出行为，使代码更加清晰和灵活。
 
+
+emplace_back()。emplace_back()函数用于在vector的末尾直接构造一个元素，而不是先构造一个临时对象再将其复制或移动到vector中。这种直接在容器内部构造元素的方式可以避免不必要的临时对象的创建和复制，从而提高性能。
+实现原理
+emplace_back()函数接受一系列参数，这些参数用于在vector的末尾直接构造一个元素。它的工作原理是直接在vector的内存空间中调用元素的构造函数，而不是先创建一个临时对象，然后将这个临时对象复制或移动到vector中。
+用途
+emplace_back()函数在需要频繁向容器中添加元素时，可以提供更好的性能。特别是在添加复杂对象时，使用emplace_back()可以避免不必要的临时对象的创建和复制，从而减少内存分配和拷贝操作的开销。
+注意事项
+参数匹配：emplace_back()函数的参数必须与容器中元素的构造函数匹配。如果参数类型不正确，会导致编译错误。
+性能优化：虽然emplace_back()通常比push_back()更高效，但在某些情况下（如添加简单类型或使用移动语义），push_back()可能仍然是一个不错的选择。
+异常安全性：emplace_back()在构造元素时可能会抛出异常。如果异常被抛出，vector的状态将保持不变，这保证了异常安全性。
+
+#include <iostream>
+#include <vector>
+class MyClass {
+public:
+    MyClass(int x) : value(x) {
+        std::cout << "MyClass constructor called with value: " << value << std::endl;
+    }
+    MyClass(const MyClass& other) : value(other.value) {
+        std::cout << "MyClass copy constructor called with value: " << value << std::endl;
+    }
+    MyClass(MyClass&& other) noexcept : value(std::move(other.value)) {
+        std::cout << "MyClass move constructor called with value: " << value << std::endl;
+    }
+private:
+    int value;
+};
+
+int main() {
+    std::vector<MyClass> vec;
+    vec.emplace_back(10); // 使用emplace_back直接构造元素
+    return 0;
+}
+在这个示例中，emplace_back(10)直接在vector的末尾构造了一个MyClass对象，而不是先创建一个临时对象再将其复制到vector中。
+MyClass constructor called with value: 10
+解释：
+emplace_back(10)调用了MyClass的构造函数，参数为10。
+构造函数输出"MyClass constructor called with value: 10"，表示构造函数被调用，并且value被初始化为10。
+在这个示例中，没有显示copy constructor或move constructor的调用，因为emplace_back()直接在vector的内存空间中构造了对象，没有创建临时对象。
+
+在emplace_back()中，如果传递的参数与vector中元素的类型不匹配，或者如果元素类型有多个构造函数，那么编译器会根据参数类型选择最合适的构造函数。这可能会调用拷贝构造函数或移动构造函数。
+拷贝构造函数
+当传递的参数是一个   已经存在的对象   时，emplace_back()会调用拷贝构造函数来在vector中创建一个新的对象。例如：
+    std::vector<MyClass> vec;
+    MyClass obj(10);
+    vec.emplace_back(obj); // 调用拷贝构造函数
+
+移动构造函数
+当传递的参数是一个   临时对象   时，emplace_back()会调用移动构造函数来避免不必要的拷贝。例如：
+vec.emplace_back(MyClass(10)); // 调用移动构造函数
+在这个例子中，MyClass(10)创建了一个临时对象，emplace_back()会使用移动构造函数将这个临时对象移动到vector中，而不是复制它。
+
+注意事项
+如果元素类型没有提供拷贝构造函数或移动构造函数，或者这些构造函数被声明为delete或=delete，那么emplace_back()将无法使用这些构造函数，并且会导致编译错误。
+在某些情况下，即使元素类型有拷贝构造函数和移动构造函数，emplace_back()也可能选择调用拷贝构造函数，而不是移动构造函数。这是因为在某些情况下，编译器可能会选择拷贝构造函数以提高代码的安全性。
+
+
+MyClass&&表示的是一个右值引用（rvalue reference）。右值引用是C++11引入的一种特殊引用类型，它允许对临时对象进行引用。
+值引用的用途
+移动语义：右值引用主要用于实现移动语义，允许将资源从一个对象快速移动到另一个对象，而不是复制。这可以减少不必要的内存分配和复制操作，提高程序的性能。
+完美转发：右值引用也用于完美转发，即保持参数的值类别（左值或右值）不变地传递给函数。
+临时对象
+临时对象是那些在表达式求值过程中创建的临时对象。例如，当你使用一个字面量或一个函数返回的值时，编译器会创建一个临时对象来存储这个值。
+右值引用与临时对象
+当你在函数参数中使用右值引用时，你可以引用临时对象。例如，当你调用一个接受右值引用参数的函数时，你可以传递一个临时对象作为参数。编译器会创建一个右值引用来引用这个临时对象。
+在C++中，左值（lvalue）和右值（rvalue）是两个重要的概念，它们描述了表达式在内存中的位置和生命周期。
+左值（lvalue）
+左值是一个在内存中有确定位置的实体，可以取地址。
+左值可以是变量、数组元素、类成员等。
+左值可以出现在赋值操作的左侧，也可以被取地址。
+右值（rvalue）
+右值是一个在内存中没有确定位置的临时值，不能取地址。
+右值可以是字面量（如42、"hello"）、函数返回值、表达式结果等。
+右值只能出现在赋值操作的右侧，不能被取地址。
+std::move的意义
+std::move是一个标准库函数，用于将一个左值转换为右值引用。它的主要目的是启用移动语义，允许将资源从一个对象快速移动到另一个对象，而不是复制。这可以减少不必要的内存分配和复制操作，提高程序的性能。
+
+void func(MyClass&& obj) {
+    // 使用obj
+}
+MyClass temp(10);
+func(std::move(temp)); // temp是一个左值，但std::move将其转换为右值引用
+
+class MyClass {
+public:
+    MyClass() {     //默认构造函数
+        std::cout << "MyClass default constructor called" << std::endl;
+    }
+    MyClass(const MyClass& other) {     //传入已经存在的对象
+        std::cout << "MyClass copy constructor called" << std::endl;
+    }
+    MyClass(MyClass&& other) noexcept {     //传入右值引用     右值引用就是右值的引用       move是一个标准库函数，用于将一个左值转换为右值引用。
+        std::cout << "MyClass move constructor called" << std::endl;
+    }
+};
+int main() {
+    std::vector<MyClass> vec;
+    vec.emplace_back(MyClass()); // 调用默认构造函数
+    vec.emplace_back(std::move(MyClass())); // 调用移动构造函数
+
+    return 0;
+    }
+
+noexcept是C++11引入的一个关键字，用于指示一个函数不会抛出任何异常。当函数声明为noexcept时，如果函数内部抛出了异常，编译器会生成一个std::terminate调用，从而立即终止程序。
+noexcept的用途
+性能优化：如果一个函数被声明为noexcept，编译器可以生成更高效的代码，因为它知道函数不会抛出异常，不需要处理异常相关的开销。
+异常安全性：如果一个函数被声明为noexcept，那么调用这个函数的代码可以更安全地处理异常。例如，如果一个noexcept函数被用作另一个noexcept函数的异常处理器，那么如果noexcept函数抛出了异常，程序将立即终止，而不是继续执行。
+
+#include <iostream>
+void func() noexcept {
+    std::cout << "func called" << std::endl;
+    throw std::runtime_error("error"); // 这将导致std::terminate调用
+}
+int main() {
+    try {
+        func();
+    } catch (...) {
+        std::cout << "catch block called" << std::endl;
+    }
+    return 0;
+}
+在这个示例中，func被声明为noexcept，但它在内部抛出了一个异常。当异常被抛出时，编译器会生成一个std::terminate调用，从而立即终止程序，而不是继续执行catch块。
+
+注意事项
+noexcept关键字只能用于函数声明和定义，不能用于变量或类型。
+noexcept关键字可以接受一个表达式，用于指示函数是否为noexcept。例如，void func() noexcept(true)表示func是noexcept的，void func() noexcept(false)表示func不是noexcept的。
+noexcept关键字可以用于优化代码，但它也会影响异常安全性。因此，在使用noexcept时，需要仔细考虑函数的行为和异常安全性。

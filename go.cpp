@@ -154,4 +154,38 @@ int numberOfSets(int n, int maxDistance, vector<vector<int>>& roads) {
     return ans;
 }
 //--------------------------------------------------------------------------
+//3112
+#include <queue>
+class Solution {
+public:
+    vector<int> minimumTime(int n, vector<vector<int>>& edges, vector<int>& disappear) {
+        vector<vector<pair<int, int>>> g(n); // 稀疏图用邻接表
+        for (auto& e : edges) {
+            int x = e[0], y = e[1], wt = e[2];
+            //这里的x, y, wt分别表示道路的起点、终点和道路长度。
+            g[x].emplace_back(y, wt);
+            //这里的emplace_back()函数用于将一个元素添加到向量的末尾。
+            g[y].emplace_back(x, wt);
+        }
 
+        vector<int> dis(n, -1);
+        dis[0] = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+        pq.emplace(0, 0);
+        while (!pq.empty()) {
+            auto [dx, x] = pq.top();
+            pq.pop();
+            if (dx > dis[x]) { // x 之前出堆过
+                continue;
+            }
+            for (auto& [y, d] : g[x]) {
+                int new_dis = dx + d;
+                if (new_dis < disappear[y] && (dis[y] < 0 || new_dis < dis[y])) {
+                    dis[y] = new_dis; // 更新 x 的邻居的最短路
+                    pq.emplace(new_dis, y);
+                }
+            }
+        }
+        return dis;
+    }
+};

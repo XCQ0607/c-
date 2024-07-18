@@ -88,13 +88,54 @@
 // }
 //----------------------------------------------
 //2959
+// int main() {
+//     int n = 3;
+//     int maxDistance = 5;
+//     vector<vector<int>> roads = {{0,1,2},{1,2,10},{0,2,10}};
+//     int result = numberOfSets(n, maxDistance, roads);
+//     cout << "Number of possible sets: " << result << endl;
+//     return 0;
+// }
+//----------------------------------------------
+//3112
 int main() {
-    int n = 3;
-    int maxDistance = 5;
-    vector<vector<int>> roads = {{0,1,2},{1,2,10},{0,2,10}};
-    int result = numberOfSets(n, maxDistance, roads);
-    cout << "Number of possible sets: " << result << endl;
+    Solution solution;
+
+    // Example 1
+    int n1 = 3;
+    vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //这里的vector<vector<int>>表示的是一个二维数组，即一个数组中的每个元素又是一个数组.与int **相比,
+    vector<int> disappear1 = {1,1,5};
+    vector<int> result1 = solution.minimumTime(n1, edges1, disappear1);
+
+    cout << "Example 1 Result:" << endl;
+    for (int i = 0; i < result1.size(); ++i) {
+        cout << "Node " << i << ": " << result1[i] << endl;
+    }
+
+    // Example 2
+    int n2 = 3;
+    vector<vector<int>> edges2 = {{0,1,2},{1,2,1},{0,2,4}};
+    vector<int> disappear2 = {1,3,5};
+    vector<int> result2 = solution.minimumTime(n2, edges2, disappear2);
+
+    cout << "\nExample 2 Result:" << endl;
+    for (int i = 0; i < result2.size(); ++i) {
+        cout << "Node " << i << ": " << result2[i] << endl;
+    }
+
+    // Example 3
+    int n3 = 2;
+    vector<vector<int>> edges3 = {{0,1,1}};
+    vector<int> disappear3 = {1,1};
+    vector<int> result3 = solution.minimumTime(n3, edges3, disappear3);
+
+    cout << "\nExample 3 Result:" << endl;
+    for (int i = 0; i < result3.size(); ++i) {
+        cout << "Node " << i << ": " << result3[i] << endl;
+    }
+
     return 0;
 }
-//----------------------------------------------
+//------------------------------------------
+
 

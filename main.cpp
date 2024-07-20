@@ -98,44 +98,81 @@
 // }
 //----------------------------------------------
 //3112
+// int main() {
+//     Solution solution;
+//
+//     // Example 1
+//     int n1 = 3;
+//     vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //这里的vector<vector<int>>表示的是一个二维数组，即一个数组中的每个元素又是一个数组.与int **相比,
+//     vector<int> disappear1 = {1,1,5};
+//     vector<int> result1 = solution.minimumTime(n1, edges1, disappear1);
+//
+//     cout << "Example 1 Result:" << endl;
+//     for (int i = 0; i < result1.size(); ++i) {
+//         cout << "Node " << i << ": " << result1[i] << endl;
+//     }
+//
+//     // Example 2
+//     int n2 = 3;
+//     vector<vector<int>> edges2 = {{0,1,2},{1,2,1},{0,2,4}};
+//     vector<int> disappear2 = {1,3,5};
+//     vector<int> result2 = solution.minimumTime(n2, edges2, disappear2);
+//
+//     cout << "\nExample 2 Result:" << endl;
+//     for (int i = 0; i < result2.size(); ++i) {
+//         cout << "Node " << i << ": " << result2[i] << endl;
+//     }
+//
+//     // Example 3
+//     int n3 = 2;
+//     vector<vector<int>> edges3 = {{0,1,1}};
+//     vector<int> disappear3 = {1,1};
+//     vector<int> result3 = solution.minimumTime(n3, edges3, disappear3);
+//
+//     cout << "\nExample 3 Result:" << endl;
+//     for (int i = 0; i < result3.size(); ++i) {
+//         cout << "Node " << i << ": " << result3[i] << endl;
+//     }
+//
+//     return 0;
+// }
+//------------------------------------------
+//2850
+// #include <iostream>
+// #include <vector>
+//
+// int main() {
+//     vector<vector<int>> grid1 = {{1,1,0},{1,1,1},{1,2,1}};
+//     vector<vector<int>> grid2 = {{1,3,0},{1,0,0},{1,0,3}};
+//     vector<vector<int>> grid3 = {{1,2,2},{1,1,0},{0,1,1}};
+//
+//     cout << "Example 1 result: " << minimumMoves(grid1) << endl;
+//     cout << "Example 2 result: " << minimumMoves(grid2) << endl;
+//     cout << "Example 3 result: " << minimumMoves(grid3) << endl;
+//
+//     return 0;
+// }
+//--------------------------------------------
+//2850
+#include <iostream>
+#include <vector>
+
 int main() {
-    Solution solution;
+    vector<vector<int>> grid1 = {{1, 1, 0}, {1, 1, 1}, {1, 2, 1}};
+    cout << "Minimum moves for grid1: " << minimumMoves(grid1) << endl;
 
-    // Example 1
-    int n1 = 3;
-    vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //这里的vector<vector<int>>表示的是一个二维数组，即一个数组中的每个元素又是一个数组.与int **相比,
-    vector<int> disappear1 = {1,1,5};
-    vector<int> result1 = solution.minimumTime(n1, edges1, disappear1);
+    vector<vector<int>> grid2 = {{1, 3, 0}, {1, 0, 0}, {1, 0, 3}};
+    cout << "Minimum moves for grid2: " << minimumMoves(grid2) << endl;
 
-    cout << "Example 1 Result:" << endl;
-    for (int i = 0; i < result1.size(); ++i) {
-        cout << "Node " << i << ": " << result1[i] << endl;
-    }
+    vector<vector<int>> grid3 = {{0, 0, 0}, {0, 9, 0}, {0, 0, 0}};
+    cout << "Minimum moves for grid3: " << minimumMoves(grid3) << endl;
 
-    // Example 2
-    int n2 = 3;
-    vector<vector<int>> edges2 = {{0,1,2},{1,2,1},{0,2,4}};
-    vector<int> disappear2 = {1,3,5};
-    vector<int> result2 = solution.minimumTime(n2, edges2, disappear2);
-
-    cout << "\nExample 2 Result:" << endl;
-    for (int i = 0; i < result2.size(); ++i) {
-        cout << "Node " << i << ": " << result2[i] << endl;
-    }
-
-    // Example 3
-    int n3 = 2;
-    vector<vector<int>> edges3 = {{0,1,1}};
-    vector<int> disappear3 = {1,1};
-    vector<int> result3 = solution.minimumTime(n3, edges3, disappear3);
-
-    cout << "\nExample 3 Result:" << endl;
-    for (int i = 0; i < result3.size(); ++i) {
-        cout << "Node " << i << ": " << result3[i] << endl;
-    }
+    vector<vector<int>> grid4 = {{0, 0, 0}, {1, 1, 1}, {1, 1, 4}};
+    cout << "Minimum moves for grid4: " << minimumMoves(grid4) << endl;
 
     return 0;
 }
-//------------------------------------------
+//----------------------------------------------------------------------------
+
 
 

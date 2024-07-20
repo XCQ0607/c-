@@ -155,6 +155,7 @@ int numberOfSets(int n, int maxDistance, vector<vector<int>>& roads) {
 }
 //--------------------------------------------------------------------------
 //3112
+#include <vector>
 #include <queue>
 class Solution {
 public:
@@ -189,3 +190,32 @@ public:
         return dis;
     }
 };
+//--------------------------------------------------------------------------
+//2850
+    int minimumMoves(vector<vector<int>>& grid) {
+        vector<pair<int, int>> from, to;        //这里的from和to分别表示道路的起点和终点。
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid[i].size(); j++) {
+                if (grid[i][j]) {       //如果gird[i][j]不为0，则表示该道路是通的，将起点和终点分别存入from和to中。
+                    for (int k = 1; k < grid[i][j]; k++) {
+                        from.emplace_back(i, j);    //emplace_back()函数用于将元素添加到向量的末尾,这里的两个元素i与j
+                    }
+                } else {
+                    to.emplace_back(i, j);
+                }
+            }
+        }
+
+        int ans = INT_MAX;  //INT_MAX指的是 C++ 标准库中的一个宏，表示 int 类型的最大值。它定义在 <climits> 头文件中。通常在 32 位系统上是
+        do {
+            int total = 0;
+            for (int i = 0; i < from.size(); i++) {
+                total += abs(from[i].first - to[i].first) + abs(from[i].second - to[i].second);
+            }
+            ans = min(ans, total);
+        } while (next_permutation(from.begin(), from.end()));
+        return ans;
+    }
+//----------------------------------------------------------------------------
+
+

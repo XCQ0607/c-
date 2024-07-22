@@ -154,25 +154,35 @@
 // }
 //--------------------------------------------
 //2850
+// #include <iostream>
+// #include <vector>
+//
+// int main() {
+//     vector<vector<int>> grid1 = {{1, 1, 0}, {1, 1, 1}, {1, 2, 1}};
+//     cout << "Minimum moves for grid1: " << minimumMoves(grid1) << endl;
+//
+//     vector<vector<int>> grid2 = {{1, 3, 0}, {1, 0, 0}, {1, 0, 3}};
+//     cout << "Minimum moves for grid2: " << minimumMoves(grid2) << endl;
+//
+//     vector<vector<int>> grid3 = {{0, 0, 0}, {0, 9, 0}, {0, 0, 0}};
+//     cout << "Minimum moves for grid3: " << minimumMoves(grid3) << endl;
+//
+//     vector<vector<int>> grid4 = {{0, 0, 0}, {1, 1, 1}, {1, 1, 4}};
+//     cout << "Minimum moves for grid4: " << minimumMoves(grid4) << endl;
+//
+//     return 0;
+// }
+//----------------------------------------------------------------------------
+//2101
 #include <iostream>
 #include <vector>
 
 int main() {
-    vector<vector<int>> grid1 = {{1, 1, 0}, {1, 1, 1}, {1, 2, 1}};
-    cout << "Minimum moves for grid1: " << minimumMoves(grid1) << endl;
-
-    vector<vector<int>> grid2 = {{1, 3, 0}, {1, 0, 0}, {1, 0, 3}};
-    cout << "Minimum moves for grid2: " << minimumMoves(grid2) << endl;
-
-    vector<vector<int>> grid3 = {{0, 0, 0}, {0, 9, 0}, {0, 0, 0}};
-    cout << "Minimum moves for grid3: " << minimumMoves(grid3) << endl;
-
-    vector<vector<int>> grid4 = {{0, 0, 0}, {1, 1, 1}, {1, 1, 4}};
-    cout << "Minimum moves for grid4: " << minimumMoves(grid4) << endl;
-
+    vector<vector<int>> bombs = {{2, 1, 3}, {6, 1, 4}};
+    int result = maximumDetonation(bombs);
+    cout << "Maximum number of bombs that can be detonated: " << result << endl;
     return 0;
 }
-//----------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------
 
 

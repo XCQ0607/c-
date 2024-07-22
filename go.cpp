@@ -217,5 +217,41 @@ public:
         return ans;
     }
 //----------------------------------------------------------------------------
+//2101
+#include <vector>
+#include <algorithm>
+int maximumDetonation(vector<vector<int>>& bombs) {
+    int n = bombs.size();
+    vector<vector<int>> g(n);
+    for (int i = 0; i < n; i++) {
+        long long x = bombs[i][0], y = bombs[i][1], r = bombs[i][2];
+        for (int j = 0; j < n; j++) {
+            long long dx = x - bombs[j][0];
+            long long dy = y - bombs[j][1];
+            if (j != i && dx * dx + dy * dy <= r * r) {
+                g[i].push_back(j); // i 可以引爆 j
+            }
+        }
+    }
+        int ans = 0;
+        vector<int> vis(n);
+        function<int(int)> dfs = [&](int x) -> int {
+            vis[x] = true;
+            int cnt = 1;
+            for (int y : g[x]) {
+                if (!vis[y]) {
+                    cnt += dfs(y);
+                }
+            }
+            return cnt;
+        };
+        for (int i = 0; i < n; i++) {
+            fill(vis.begin(), vis.end(), 0);
+            ans = max(ans, dfs(i));
+        }
+        return ans;
 
 
+}
+
+//-----------------------------------------------------

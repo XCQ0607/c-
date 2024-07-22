@@ -500,7 +500,105 @@ ans = min(INT_MAX, 3) = 3
 总结
 from 和 to 的作用是帮助我们找到多余石头和需要石头的格子的位置，并通过排列组合计算最小的移动次数。通过这种方式，我们可以确保每个格子最终都有一个石头，并且总移动次数最小。
 
+--------------------------------------------------
+2101
+题目:
+给你一个炸弹列表。一个炸弹的 爆炸范围 定义为以炸弹为圆心的一个圆。
+炸弹用一个下标从 0 开始的二维整数数组 bombs 表示，其中 bombs[i] = [xi, yi, ri] 。xi 和 yi 表示第 i 个炸弹的 X 和 Y 坐标，ri 表示爆炸范围的 半径 。
+你需要选择引爆 一个 炸弹。当这个炸弹被引爆时，所有 在它爆炸范围内的炸弹都会被引爆，这些炸弹会进一步将它们爆炸范围内的其他炸弹引爆。
+给你数组 bombs ，请你返回在引爆 一个 炸弹的前提下，最多 能引爆的炸弹数目。
 
+示例 1：
+输入：bombs = [[2,1,3],[6,1,4]]
+输出：2
+解释：
+上图展示了 2 个炸弹的位置和爆炸范围。
+如果我们引爆左边的炸弹，右边的炸弹不会被影响。
+但如果我们引爆右边的炸弹，两个炸弹都会爆炸。
+所以最多能引爆的炸弹数目是 max(1, 2) = 2 。
+示例 2：
+输入：bombs = [[1,1,5],[10,10,5]]
+输出：1
+解释：
+引爆任意一个炸弹都不会引爆另一个炸弹。所以最多能引爆的炸弹数目为 1 。
+示例 3：
+输入：bombs = [[1,2,3],[2,3,1],[3,4,2],[4,5,3],[5,6,4]]
+输出：5
+解释：
+最佳引爆炸弹为炸弹 0 ，因为：
+- 炸弹 0 引爆炸弹 1 和 2 。红色圆表示炸弹 0 的爆炸范围。
+- 炸弹 2 引爆炸弹 3 。蓝色圆表示炸弹 2 的爆炸范围。
+- 炸弹 3 引爆炸弹 4 。绿色圆表示炸弹 3 的爆炸范围。
+所以总共有 5 个炸弹被引爆。
+解答：
+go.cpp文件
+
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        int n = bombs.size();
+        vector<vector<int>> g(n);
+        for (int i = 0; i < n; i++) {
+            long long x = bombs[i][0], y = bombs[i][1], r = bombs[i][2];
+            for (int j = 0; j < n; j++) {
+                long long dx = x - bombs[j][0];
+                long long dy = y - bombs[j][1];
+                if (j != i && dx * dx + dy * dy <= r * r) {
+                    g[i].push_back(j); // i 可以引爆 j
+                }
+            }
+        }
+
+        int ans = 0;
+        vector<int> vis(n);
+        auto dfs = [&](auto&& dfs, int x) -> int {
+            vis[x] = true;
+            int cnt = 1;
+            for (int y : g[x]) {
+                if (!vis[y]) {
+                    cnt += dfs(dfs, y);
+                }
+            }
+            return cnt;
+        };
+        for (int i = 0; i < n; i++) {
+            ranges::fill(vis, 0);
+            ans = max(ans, dfs(dfs, i));
+        }
+        return ans;
+    }
+---------------------------
+递归调用的实现方式：
+
+1.传递自身引用的方式：通过传递dfs自身来实现递归。由于C++ lambda函数无法直接在定义中递归调用自身，因此需要通过传递自身引用来实现递归。
+2.使用std::function的方式：通过显式定义std::function来包装lambda函数，这样lambda函数可以直接递归调用自身。
+
+为什么使用auto&&
+在递归lambda函数中使用auto&&允许你传递lambda函数自身的引用，并能够处理所有类型的引用，从而实现递归调用。以下是使用auto&&的主要原因：
+通用性：auto&&可以接受和传递所有类型的引用，无论是左值还是右值。这使得函数更加通用和灵活。
+避免拷贝：使用引用可以避免不必要的拷贝操作，提升性能。
+
+auto dfs = [&](auto&& dfs, int x) -> int {
+    vis[x] = true;
+    int cnt = 1;
+    for (int y : g[x]) {
+        if (!vis[y]) {
+            cnt += dfs(dfs, y);
+        }
+    }
+    return cnt;
+};
+使用std::function的方式：
+cpp
+复制代码
+function<int(int)> dfs = [&](int x) -> int {
+    vis[x] = true;
+    int cnt = 1;
+    for (int y : g[x]) {
+        if (!vis[y]) {
+            cnt += dfs(y);
+        }
+    }
+    return cnt;
+};
 
 
 

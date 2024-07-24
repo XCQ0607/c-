@@ -944,3 +944,112 @@ for (std::vector<int>::iterator--(相当于auto) it = vec.begin(); it != vec.end
 你不能将 std::vector<int> 用作迭代器类型。这是因为 std::vector<int> 表示一个整数向量，而不是迭代器类型。迭代器是专门用于遍历容器的对象。
 
 }
+
+
+
+unordered_set
+特点：
+存储唯一的元素（不允许重复）
+元素不按特定顺序存储
+查找、插入和删除操作的平均时间复杂度为 O(1)
+用途：
+需要快速查找元素是否存在
+需要存储唯一值的集合
+不需要有序存储
+示例：
+unordered_set<int> set = {1, 2, 3, 4, 5};
+set.insert(6);  // 插入元素
+set.erase(3);   // 删除元素
+if (set.find(4) != set.end()) {
+    cout << "4 is in the set" << endl;
+}
+unordered_map
+特点：
+存储键值对（key-value pairs）
+键是唯一的，但值可以重复
+元素不按特定顺序存储
+查找、插入和删除操作的平均时间复杂度为 O(1)
+用途：
+需要快速查找与特定键关联的值
+需要存储键值对的映射关系
+不需要有序存储
+示例：
+unordered_map<string, int> map = {{"apple", 1}, {"banana", 2}};
+map["cherry"] = 3;  // 插入新键值对
+map["apple"] = 5;   // 更新已存在的键的值
+if (map.find("banana") != map.end()) {
+    cout << "Value of banana: " << map["banana"] << endl;
+}
+主要区别
+存储内容：
+unordered_set 存储单个元素
+unordered_map 存储键值对
+访问方式：
+unordered_set 只能检查元素是否存在
+unordered_map 可以通过键访问对应的值
+
+
+ for (const auto& pair : unordered_map类型的数组) {
+   //pair 是一个 std::pair 对象，包含键和值
+     pair.first 是键
+   pair.second 是值(个数)
+ }
+
+两种容器的常用函数：
+插入和删除：
+insert(value): 插入元素
+erase(value): 删除指定值的元素
+erase(iterator): 删除迭代器指向的元素
+clear(): 清空所有元素
+b) 查找和访问：
+find(value): 查找元素，返回迭代器
+count(value): 返回元素出现的次数（对于set总是0或1）
+c) 容量：
+size(): 返回元素数量
+empty(): 检查容器是否为空
+d) 迭代：
+begin(), end(): 返回指向开始和结束的迭代器
+e) 桶操作：
+bucket_count(): 返回桶的数量
+load_factor(): 返回负载因子
+unordered_map 的常用函数：
+a) 插入和删除：
+insert({key, value}): 插入键值对
+emplace(key, value): 原地构造并插入键值对
+erase(key): 删除指定键的元素
+clear(): 清空所有元素
+b) 查找和访问：
+find(key): 查找键，返回迭代器
+count(key): 返回键出现的次数（总是0或1）
+at(key): 访问键对应的值，如果键不存在则抛出异常
+operator[]: 访问或插入键值对
+c) 容量：
+size(): 返回元素数量
+empty(): 检查容器是否为空
+d) 迭代：
+begin(), end(): 返回指向开始和结束的迭代器
+e) 桶操作：
+bucket_count(): 返回桶的数量
+load_factor(): 返回负载因子
+两者共有的其他重要函数：
+swap(): 交换两个容器的内容
+max_size(): 返回容器可以容纳的最大元素数
+rehash(n): 将容器rehash到至少n个桶
+reserve(n): 预留空间以容纳n个元素
+使用示例：
+// unordered_set 示例
+unordered_set<int> set = {1, 2, 3};
+set.insert(4);
+if (set.find(2) != set.end()) {
+    cout << "2 is in the set" << endl;
+}
+cout << "Set size: " << set.size() << endl;
+
+// unordered_map 示例
+unordered_map<string, int> map = {{"one", 1}, {"two", 2}};
+map.emplace("three", 3);
+if (map.count("two") > 0) {
+    cout << "Value of 'two': " << map.at("two") << endl;
+}
+map["four"] = 4;  // 使用 operator[] 插入新元素
+cout << "Map size: " << map.size() << endl;

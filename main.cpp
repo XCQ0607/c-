@@ -174,15 +174,67 @@
 // }
 //----------------------------------------------------------------------------
 //2101
-#include <iostream>
-#include <vector>
-
+// #include <iostream>
+// #include <vector>
+//
+// int main() {
+//     vector<vector<int>> bombs = {{2, 1, 3}, {6, 1, 4}};
+//     int result = maximumDetonation(bombs);
+//     cout << "Maximum number of bombs that can be detonated: " << result << endl;
+//     return 0;
+// }
+//------------------------------------------------------------------------------
+//3098
+// int main() {
+//     std::vector<int>  nums = {1, 2, 3, 4};
+//     int k = 3;
+//
+//     int result = sumOfPowers(nums, k);
+//     std::cout << "Result: " << result << std::endl;
+//
+//     return 0;
+// }
+//-------------------------------------------------------------------------------
+// #include <iostream>
+// #include <vector>
+//
+// using namespace std;
+//
+// int main() {
+//     Solution1 solution;
+//
+//     vector<int> nums = {1, 6, 7, 8};
+//     vector<int> moveFrom = {1, 7, 2};
+//     vector<int> moveTo = {2, 9, 5};
+//
+//     vector<int> result = solution.relocateMarbles(nums, moveFrom, moveTo);
+//
+//     cout << "Result: ";
+//     for (int num : result) {
+//         cout << num << " ";
+//     }
+//     cout << endl;
+//
+//     return 0;
+// }
+//升级
 int main() {
-    vector<vector<int>> bombs = {{2, 1, 3}, {6, 1, 4}};
-    int result = maximumDetonation(bombs);
-    cout << "Maximum number of bombs that can be detonated: " << result << endl;
+    // 定义输入
+    vector<int> nums = {1, 1, 3, 3};
+    vector<int> moveFrom = {1, 3, 3};
+    vector<int> moveTo = {2, 2 ,2};
+
+    // 调用函数
+    vector<int> result = relocateMarbles1(nums, moveFrom, moveTo);
+
+    // 输出结果
+    cout << "Final positions of marbles: ";
+    for (int pos : result) {
+        cout << pos << " ";
+    }
+    cout << endl;
+
     return 0;
 }
-//------------------------------------------------------------------------------
-
+//----------------------------
 

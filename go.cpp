@@ -255,3 +255,158 @@ int maximumDetonation(vector<vector<int>>& bombs) {
 }
 
 //-----------------------------------------------------
+//3098
+#include <vector>
+#include <set>
+#include <cstring>
+#include <algorithm>
+#define MOD 1000000007
+
+void MD(int& x) {
+        if (x >= MOD) {
+            x -= MOD;
+        }
+    }
+
+int sumOfPowers(std::vector<int>& nums, int k) {
+        const int n = nums.size();
+        std::sort(nums.begin(), nums.end());
+        std::set<int> deltas;
+
+        // Calculate all pairwise absolute differences
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                deltas.insert(nums[j] - nums[i]);
+                //insert函数是用来向set中插入元素的函数，如果插入成功，则返回一个pair，pair的first元素是一个迭代器，指向插入的元素，pair的second元素是一个bool值，表示插入是否成功。
+            }
+        }
+        //这段代码将所有可能的差值 nums[j] - nums[i] 插入到 deltas 集合中。如果两个元素的差值相同，std::set 会自动处理，确保集合中没有重复的差值。因此，差值相同的情况不会重复存储。
+
+        constexpr int MAXN = 50;
+        static int combs[MAXN + 1][MAXN + 1];
+        std::memset(combs, 0, sizeof(combs));
+
+        combs[0][0] = 1;
+        for (int i = 1; i <= n; ++i) {
+            combs[i][0] = 1;
+            for (int j = 1; j <= i; ++j) {
+                combs[i][j] = (combs[i-1][j-1] + combs[i-1][j]) % MOD;
+            }
+        }
+
+        // dp[i][j]: number of subsequences of length j ending at index i
+        static int dp[MAXN][MAXN + 1];
+
+        int last_ans = combs[n][k];
+        int ans = 0;
+
+        for (int delta : deltas) {
+            std::memset(dp, 0, sizeof(dp));
+            dp[0][0] = 1;
+            dp[0][1] = 1;
+
+            for (int i = 1; i < n; ++i) {
+                int feasible = i - 1;
+                while (feasible >= 0 && nums[i] - nums[feasible] <= delta) {
+                    --feasible;
+                }
+
+                for (int j = 0; j <= k; ++j) {
+                    dp[i][j] = dp[i - 1][j];
+                    if (j > 0 && feasible >= 0) {
+                        dp[i][j] = (dp[i][j] + dp[feasible][j - 1]) % MOD;
+                    }
+                }
+            }
+
+            int this_ans = dp[n - 1][k];
+            int this_cnt = (last_ans + MOD - this_ans) % MOD;
+            ans = (ans + 1LL * this_cnt * delta % MOD) % MOD;
+            last_ans = this_ans;
+        }
+
+        return ans;
+ }
+//---------------------------------------------------
+//2766
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+
+using namespace std;
+
+class Solution1 {
+public:
+    vector<int> relocateMarbles(vector<int>& nums, vector<int>& moveFrom, vector<int>& moveTo) {
+        unordered_set<int> st(nums.begin(), nums.end());
+        //unordered_set 是 C++ 标准库中的一个关联容器，它存储的元素是无序的，并且每个元素都是唯一的。
+        for (int i = 0; i < moveFrom.size(); i++) {
+            st.erase(moveFrom[i]);
+            //erase函数是用来从set中删除元素的函数，如果删除成功，则返回一个bool值，表示删除是否成功。
+            st.insert(moveTo[i]);
+        }
+        vector<int> ans(st.begin(), st.end());
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
+//升级题目,只移动一个石块
+vector<int> relocateMarbles1(vector<int>& nums, vector<int>& moveFrom, vector<int>& moveTo) {
+    unordered_map<int, int> stoneCount;
+    //unordered_map 是 C++ 标准库中的一个关联容器，它存储的元素是无序的，并且每个元素的键是唯一的。
+
+    // 初始化石块数量
+    for (int num : nums) {
+        stoneCount[num]++;
+    }
+
+    // 执行移动操作
+    for (int i = 0; i < moveFrom.size(); i++) {
+        int from = moveFrom[i];
+        int to = moveTo[i];
+
+        if (stoneCount[from] > 0) {
+            stoneCount[from]--;
+            stoneCount[to]++;
+
+            if (stoneCount[from] == 0) {
+                stoneCount.erase(from);
+                //erase函数是用来从map中删除元素的函数，如果删除成功，则返回一个bool值，表示删除是否成功。
+            }
+        }
+    }
+
+    // 收集有石块的位置
+    vector<int> result;
+    for (const auto& pair : stoneCount) {
+        if (pair.second > 0) {
+            result.push_back(pair.first);
+        }
+    }
+    // pair 是什么？
+    // 在这个上下文中，pair 是 unordered_map 中的一个键值对（key-value pair）。unordered_map 存储的每个元素都是一个 pair。
+    //
+    // first 和 second 是什么？
+    //
+    // pair.first 表示键（key）
+    // pair.second 表示值（value）
+    // 排序结果
+//     sort(result.begin(), result.end());
+//     举个例子：
+//      假设在某一时刻，stoneCount 包含以下内容：
+//      {2: 2, 3: 1, 5: 0}
+//
+//     这表示：
+//
+//     位置 2 有 2 个石块
+//     位置 3 有 1 个石块
+//     位置 5 有 0 个石块
+//     遍历这个 map 时：
+//
+//     对于 {2: 2}，pair.first 是 2，pair.second 是 2
+//     对于 {3: 1}，pair.first 是 3，pair.second 是 1
+//     对于 {5: 0}，pair.first 是 5，pair.second 是 0
+//     最终，result 数组将包含 [2, 3]，因为只有位置 2 和 3 的石块数量大于 0
+    return result;
+}
+//-----------------------------------------------------

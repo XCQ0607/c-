@@ -237,17 +237,17 @@
 // }
 //----------------------------
 //2844
-#include <iostream>
-#include <string>
+// #include <iostream>
+// #include <string>
 
-int main() {
-    string num;
-    cout << "请输入一个数字字符串: ";
-    cin >> num;
-    int result = minimumOperations(num);
-    cout << "最少需要的操作次数: " << result << endl;
-    return 0;
-}
+// int main() {
+//     string num;
+//     cout << "请输入一个数字字符串: ";
+//     cin >> num;
+//     int result = minimumOperations(num);
+//     cout << "最少需要的操作次数: " << result << endl;
+//     return 0;
+// }
 // int main() {
 //     string num = "2245047";
 //     int result = minimumOperations(num);
@@ -255,4 +255,15 @@ int main() {
 //     return 0;
 // }
 //------------------------------
+//3011
+#include <iostream>
+#include <vector>
+
+int main() {
+    vector<int> nums = {8, 4, 2, 30, 15};
+    bool result = canSortArray(nums);
+    cout << (result ? "true" : "false") << endl;
+    return 0;
+}
+
 

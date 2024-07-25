@@ -447,3 +447,19 @@ int minimumOperations(string num) {
 // 如果找不到这样的方式，zero 就会成为最小值，表示我们需要删除所有字符。
 // 这种处理方式实际上巧妙地处理了无解的情况。当没有办法通过删除部分字符使数字变为特殊数字时，删除所有字符（或除了一个 '0' 之外的所有字符）成为了默认的"解"，尽管这并不会产生一个特殊数字。
 //-----------------------------------------------
+//3011
+    bool canSortArray(vector<int>& nums) {
+        for (int i = 0, n = nums.size(); i < n;) {
+            int start = i;
+            int ones = __builtin_popcount(nums[i++]);
+            //__builtin_popcount 是 GCC（GNU Compiler Collection）提供的一个内置函数，用于计算一个整数的二进制表示中 1 的个数。
+            //__builtin_popcount 函数计算的是二进制表示中 1 的个数。如果你需要计算 0 的个数，你可以使用 __builtin_popcount(~x)，其中 x 是你的整数。~ 是按位取反运算符，它会将 x 的每一位都取反，所以 __builtin_popcount(~x) 计算的是 x 的二进制表示中 0 的个数。
+            while (i < n && __builtin_popcount(nums[i]) == ones) {
+                i++;
+            }
+            sort(nums.begin() + start, nums.begin() + i);
+        }
+        return ranges::is_sorted(nums);
+    //is_orted 是 C++20 中引入的一个函数，用于检查一个范围（range）是否已经排序。如果范围已经排序，它返回 true；否则，返回 false。
+    }
+

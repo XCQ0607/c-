@@ -1,5 +1,4 @@
 #include <iostream>
-#include "learn.cpp"
 #include "go.cpp"
 // #include "all.cpp"
 
@@ -218,23 +217,42 @@
 //     return 0;
 // }
 //升级
+// int main() {
+//     // 定义输入
+//     vector<int> nums = {1, 1, 3, 3};
+//     vector<int> moveFrom = {1, 3, 3};
+//     vector<int> moveTo = {2, 2 ,2};
+//
+//     // 调用函数
+//     vector<int> result = relocateMarbles1(nums, moveFrom, moveTo);
+//
+//     // 输出结果
+//     cout << "Final positions of marbles: ";
+//     for (int pos : result) {
+//         cout << pos << " ";
+//     }
+//     cout << endl;
+//
+//     return 0;
+// }
+//----------------------------
+//2844
+#include <iostream>
+#include <string>
+
 int main() {
-    // 定义输入
-    vector<int> nums = {1, 1, 3, 3};
-    vector<int> moveFrom = {1, 3, 3};
-    vector<int> moveTo = {2, 2 ,2};
-
-    // 调用函数
-    vector<int> result = relocateMarbles1(nums, moveFrom, moveTo);
-
-    // 输出结果
-    cout << "Final positions of marbles: ";
-    for (int pos : result) {
-        cout << pos << " ";
-    }
-    cout << endl;
-
+    string num;
+    cout << "请输入一个数字字符串: ";
+    cin >> num;
+    int result = minimumOperations(num);
+    cout << "最少需要的操作次数: " << result << endl;
     return 0;
 }
-//----------------------------
+// int main() {
+//     string num = "2245047";
+//     int result = minimumOperations(num);
+//     cout << "Result: " << result << endl;
+//     return 0;
+// }
+//------------------------------
 

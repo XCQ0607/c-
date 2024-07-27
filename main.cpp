@@ -256,14 +256,23 @@
 // }
 //------------------------------
 //3011
-#include <iostream>
-#include <vector>
-
+// #include <iostream>
+// #include <vector>
+//
+// int main() {
+//     vector<int> nums = {8, 4, 2, 30, 15};
+//     bool result = canSortArray(nums);
+//     cout << (result ? "true" : "false") << endl;
+//     return 0;
+// }
+//--------------------------------
+//3106
 int main() {
-    vector<int> nums = {8, 4, 2, 30, 15};
-    bool result = canSortArray(nums);
-    cout << (result ? "true" : "false") << endl;
+    string s = "zbbz";
+    int k = 3;
+    string result = getSmallestString(s, k);
+    cout << result << endl; // 输出: aaaz
     return 0;
 }
-
+//-------------------------------------
 

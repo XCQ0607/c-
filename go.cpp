@@ -462,4 +462,19 @@ int minimumOperations(string num) {
         return ranges::is_sorted(nums);
     //is_orted 是 C++20 中引入的一个函数，用于检查一个范围（range）是否已经排序。如果范围已经排序，它返回 true；否则，返回 false。
     }
-
+//--------------------------------------
+//3106
+string getSmallestString(string s, int k) {
+    for (char& c : s) {
+        int dis = min(c - 'a', 'z' - c + 1);
+        //dis 代表 "distance"（距离），它表示将当前字符 c 变为 'a' 所需的最小步数
+        if (dis > k) {
+            c -= k;
+            break;
+        }
+        c = 'a';
+        k -= dis;
+    }
+    return s;
+}
+//-----------------------------

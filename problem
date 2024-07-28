@@ -884,8 +884,123 @@ dis (1) > k (0)，所以执行： c -= k (但 k = 0，所以 c 不变) break (�
 函数返回 s = "aaaz"
 
 --------------------------------
+题目:
+在二维平面上的 x 轴上，放置着一些方块。
+给你一个二维整数数组 positions ，其中 positions[i] = [lefti, sideLengthi] 表示：第 i 个方块边长为 sideLengthi ，其左侧边与 x 轴上坐标点 lefti 对齐。
+每个方块都从一个比目前所有的落地方块更高的高度掉落而下。方块沿 y 轴负方向下落，直到着陆到 另一个正方形的顶边 或者是 x 轴上 。一个方块仅仅是擦过另一个方块的左侧边或右侧边不算着陆。一旦着陆，它就会固定在原地，无法移动。
+在每个方块掉落后，你必须记录目前所有已经落稳的 方块堆叠的最高高度 。
+返回一个整数数组 ans ，其中 ans[i] 表示在第 i 块方块掉落后堆叠的最高高度。
 
+示例 1：
+输入：positions = [[1,2],[2,3],[6,1]]
+输出：[2,5,5]
+解释：
+第 1 个方块掉落后，最高的堆叠由方块 1 组成，堆叠的最高高度为 2 。
+第 2 个方块掉落后，最高的堆叠由方块 1 和 2 组成，堆叠的最高高度为 5 。
+第 3 个方块掉落后，最高的堆叠仍然由方块 1 和 2 组成，堆叠的最高高度为 5 。
+因此，返回 [2, 5, 5] 作为答案。
+示例 2：
+输入：positions = [[100,100],[200,100]]
+输出：[100,100]
+解释：
+第 1 个方块掉落后，最高的堆叠由方块 1 组成，堆叠的最高高度为 100 。
+第 2 个方块掉落后，最高的堆叠可以由方块 1 组成也可以由方块 2 组成，堆叠的最高高度为 100 。
+因此，返回 [100, 100] 作为答案。
+注意，方块 2 擦过方块 1 的右侧边，但不会算作在方块 1 上着陆。
+解答：
+go.cpp文件
+    int findSite(vector<int>& site,int M,int tar){
+        int l=0,r=M-1,mid;
+        while(l<=r){
+            mid=(l+r)/2;
+            if(site[mid]==tar) return mid;
+            else if(site[mid]>tar) r=mid-1;
+            else l=mid+1;
+        }
+        return -1;
+    }
+    vector<int> fallingSquares(vector<vector<int>>& positions) {
+        int N=positions.size(),maxH=0;
+        vector<int> site;
+        site.reserve(2*N);
+        for(const auto& v:positions){
+            site.emplace_back(v[0]);
+            site.emplace_back(v[0]+v[1]-1);
+        }
+        sort(site.begin(),site.end());
+        site.erase(unique(site.begin(),site.end()),site.end());
+        int M=site.size();
+        vector<int> height(M,0),ans(N);
+        for(int i=0,start,end,len,tmp;i<N;++i){
+            len=positions[i][1];
+            start=findSite(site,M,positions[i][0]);
+            end=positions[i][0]+len-1;
+            tmp=0;
+            for(int j=start;j<M&&site[j]<=end;++j) tmp=max(tmp,height[j]);
+            tmp+=len;
+            for(int j=start;j<M&&site[j]<=end;++j) height[j]=tmp;
+            maxH=max(tmp,maxH);
+            ans[i]=maxH;
+        }
+        return ans;
+    }
 
+positions = [[1,2],[2,3],[6,1]]
+初始状态：
+N = 3 (positions的长度)
+M = 6 (site的长度)
+height = [0, 0, 0, 0, 0, 0] (初始化为0)
+maxH = 0
+ans = [] (空数组，将被填充)
 
+第一次迭代 (i = 0, positions[0] = [1,2]):
 
+len = 2
+start = findSite(site, 6, 1) = 0 (1在site中的索引是0)
+end = 1 + 2 - 1 = 2
+tmp = 0 (初始值)
+第一个for循环: tmp 保持为0，因为所有height[j]都是0
+tmp += len, 所以 tmp = 2
+第二个for循环: 更新 height[0] 和 height[1] 为 2 height 变为 [2, 2, 0, 0, 0, 0]
+maxH = max(2, 0) = 2
+ans[0] = 2
+ans = [2]
+height = [2, 2, 0, 0, 0, 0]
 
+第二次迭代 (i = 1, positions[1] = [2,3]):
+
+len = 3
+start = findSite(site, 6, 2) = 1 (2在site中的索引是1)
+end = 2 + 3 - 1 = 4
+tmp = 0 (初始值)
+第一个for循环: tmp = max(0, height[1], height[2], height[3]) = 2
+tmp += len, 所以 tmp = 5
+第二个for循环: 更新 height[1], height[2], 和 height[3] 为 5 height 变为 [2, 5, 5, 5, 0, 0]
+maxH = max(5, 2) = 5
+ans[1] = 5
+ans = [2, 5]
+height = [2, 5, 5, 5, 0, 0]
+
+第三次迭代 (i = 2, positions[2] = [6,1]):
+
+len = 1
+start = findSite(site, 6, 6) = 4 (6在site中的索引是4)
+end = 6 + 1 - 1 = 6
+tmp = 0 (初始值)
+第一个for循环: tmp = max(0, height[4], height[5]) = 0
+tmp += len, 所以 tmp = 1
+第二个for循环: 更新 height[4] 和 height[5] 为 1 height 变为 [2, 5, 5, 5, 1, 1]
+maxH = max(1, 5) = 5 (不变)
+ans[2] = 5
+最终结果：
+ans = [2, 5, 5]
+height = [2, 5, 5, 5, 1, 1]
+
+这个过程展示了如何使用离散化的坐标系统来模拟方块的堆叠。每次迭代都会:
+
+确定当前方块影响的范围（start 到 end）
+计算当前方块下方的最大高度（第一个for循环）
+更新受影响区域的高度（第二个for循环）
+更新全局最大高度和结果数组
+
+----------------------------------

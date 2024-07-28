@@ -28,7 +28,7 @@
 //     root->right->left = new TreeNode(3);
     
 //     vector<int> result = inorderTraversal(root);
-//     for(int val : result) {   //forçš„æ¡ä»¶ï¼šæŒ‡å®šä¸€ä¸ªå®¹å™¨ï¼Œç„¶åéå†è¿™ä¸ªå®¹å™¨ä¸­çš„æ¯ä¸ªå…ƒç´ ï¼Œvalæ˜¯å®¹å™¨ä¸­çš„æ¯ä¸ªå…ƒç´ 
+//     for(int val : result) {   //forµÄÌõ¼ş£ºÖ¸¶¨Ò»¸öÈİÆ÷£¬È»ºó±éÀúÕâ¸öÈİÆ÷ÖĞµÄÃ¿¸öÔªËØ£¬valÊÇÈİÆ÷ÖĞµÄÃ¿¸öÔªËØ
 //         cout << val << " ";
 //     }
 //     cout << endl;
@@ -51,7 +51,7 @@
 //     // Define nodes p and q as described in example 1
 //     TreeNode* p = root->right->left;
 //     TreeNode* q = root->left->right->right;
-//     //5ä¸7çš„æœ€è¿‘å…¬å…±ç¥–å…ˆæ˜¯6
+//     //5Óë7µÄ×î½ü¹«¹²×æÏÈÊÇ6
 //     // Call the function lowestCommonAncestor
 //     TreeNode* result = BSTAncestor(root, p, q);
 //     TreeNode* result1 = lowestCommonAncestor(root, p, q);
@@ -102,7 +102,7 @@
 //
 //     // Example 1
 //     int n1 = 3;
-//     vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //è¿™é‡Œçš„vector<vector<int>>è¡¨ç¤ºçš„æ˜¯ä¸€ä¸ªäºŒç»´æ•°ç»„ï¼Œå³ä¸€ä¸ªæ•°ç»„ä¸­çš„æ¯ä¸ªå…ƒç´ åˆæ˜¯ä¸€ä¸ªæ•°ç»„.ä¸int **ç›¸æ¯”,
+//     vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //ÕâÀïµÄvector<vector<int>>±íÊ¾µÄÊÇÒ»¸ö¶şÎ¬Êı×é£¬¼´Ò»¸öÊı×éÖĞµÄÃ¿¸öÔªËØÓÖÊÇÒ»¸öÊı×é.Óëint **Ïà±È,
 //     vector<int> disappear1 = {1,1,5};
 //     vector<int> result1 = solution.minimumTime(n1, edges1, disappear1);
 //
@@ -216,17 +216,17 @@
 //
 //     return 0;
 // }
-//å‡çº§
+//Éı¼¶
 // int main() {
-//     // å®šä¹‰è¾“å…¥
+//     // ¶¨ÒåÊäÈë
 //     vector<int> nums = {1, 1, 3, 3};
 //     vector<int> moveFrom = {1, 3, 3};
 //     vector<int> moveTo = {2, 2 ,2};
 //
-//     // è°ƒç”¨å‡½æ•°
+//     // µ÷ÓÃº¯Êı
 //     vector<int> result = relocateMarbles1(nums, moveFrom, moveTo);
 //
-//     // è¾“å‡ºç»“æœ
+//     // Êä³ö½á¹û
 //     cout << "Final positions of marbles: ";
 //     for (int pos : result) {
 //         cout << pos << " ";
@@ -239,13 +239,13 @@
 //2844
 // #include <iostream>
 // #include <string>
-
+//
 // int main() {
 //     string num;
-//     cout << "è¯·è¾“å…¥ä¸€ä¸ªæ•°å­—å­—ç¬¦ä¸²: ";
+//     cout << "ÇëÊäÈëÒ»¸öÊı×Ö×Ö·û´®: ";
 //     cin >> num;
 //     int result = minimumOperations(num);
-//     cout << "æœ€å°‘éœ€è¦çš„æ“ä½œæ¬¡æ•°: " << result << endl;
+//     cout << "×îÉÙĞèÒªµÄ²Ù×÷´ÎÊı: " << result << endl;
 //     return 0;
 // }
 // int main() {
@@ -267,12 +267,25 @@
 // }
 //--------------------------------
 //3106
+// int main() {
+//     string s = "zbbz";
+//     int k = 3;
+//     string result = getSmallestString(s, k);
+//     cout << result << endl; // Êä³ö: aaaz
+//     return 0;
+// }
+//-------------------------------------
+//699
 int main() {
-    string s = "zbbz";
-    int k = 3;
-    string result = getSmallestString(s, k);
-    cout << result << endl; // è¾“å‡º: aaaz
+    vector<vector<int>> positions = {{1,2},{2,3},{6,1}};
+    vector<int> result = fallingSquares(positions);
+    cout << "Output: [";
+    for (int i = 0; i < result.size(); ++i) {
+        cout << result[i];
+        if (i < result.size() - 1) cout << ",";
+    }
+    cout << "]" << endl;
     return 0;
 }
-//-------------------------------------
+//---------------------------------------
 

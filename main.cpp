@@ -275,17 +275,29 @@
 //     return 0;
 // }
 //-------------------------------------
-//699
+// 699
+  // int main() {
+  //     vector<vector<int>> positions = {{1,2},{2,3},{6,1}};
+  //     vector<int> result = fallingSquares(positions);
+  //     cout << "Output: [";
+  //     for (int i = 0; i < result.size(); ++i) {
+  //         cout << result[i];
+  //         if (i < result.size() - 1) cout << ",";
+  //     }
+  //     cout << "]" << endl;
+  //     return 0;
+  // }
+//---------------------------------------
+//2961
 int main() {
-    vector<vector<int>> positions = {{1,2},{2,3},{6,1}};
-    vector<int> result = fallingSquares(positions);
-    cout << "Output: [";
-    for (int i = 0; i < result.size(); ++i) {
-        cout << result[i];
-        if (i < result.size() - 1) cout << ",";
+    vector<vector<int>> variables = {{2,3,3,10}, {3,3,3,1}, {6,1,1,4}};
+    int target = 2;
+    vector<int> result = getGoodIndices(variables, target);
+    cout << "Good indices: ";
+    for (int index : result) {
+        cout << index << " ";
     }
-    cout << "]" << endl;
+    cout << endl;
     return 0;
 }
-//---------------------------------------
 

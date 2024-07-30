@@ -646,16 +646,64 @@ vector<int> fallingSquares(vector<vector<int>>& positions)
         //更新maxH
         ans[i] = maxH;
         //每falling一次，更新ans[i]的值
-// len = 2
-// start = findSite(site, 6, 1) = 0 (1在site中的索引是0)
-// end = 1 + 2 - 1 = 2
-// tmp = 0 (初始值)
-// 第一个for循环: tmp 保持为0，因为所有height[j]都是0
-// tmp += len, 所以 tmp = 2
-// 第二个for循环: 更新 height[0] 和 height[1] 为 2 height 变为 [2, 2, 0, 0, 0, 0]
-// maxH = max(2, 0) = 2
-// ans[0] = 2
+        // len = 2
+        // start = findSite(site, 6, 1) = 0 (1在site中的索引是0)
+        // end = 1 + 2 - 1 = 2
+        // tmp = 0 (初始值)
+        // 第一个for循环: tmp 保持为0，因为所有height[j]都是0
+        // tmp += len, 所以 tmp = 2
+        // 第二个for循环: 更新 height[0] 和 height[1] 为 2 height 变为 [2, 2, 0, 0, 0, 0]
+        // maxH = max(2, 0) = 2
+        // ans[0] = 2
     }
     return ans;
 }
 //-----------------------------------
+//2961
+int pow(int x, int n, int mod){
+    //x的n次方再模mod
+    int res = 1;
+    while(n){
+        if(n&1){
+            res = res * x % mod;        //在自乘得时候同时mod不影响结果
+        }
+        x = x * x % mod;                //这里也mod减小运算量
+        n >>= 1;
+    }
+    return res;
+}
+// 这个函数接受两个参数：base和exponent，都是double类型的。pow函数返回base的exponent次幂。
+// 例如，pow(2.0, 3.0)将返回8.0，因为2的3次幂是8。
+vector<int> getGoodIndices(vector<vector<int>>& variables, int target) {
+    vector<int> res;
+    for (int i = 0; i < variables.size(); i++){
+        auto& v = variables[i];
+        if (pow(pow(v[0], v[1], 10), v[2], v[3]) == target) {
+            res.push_back(i);
+        }
+    }
+    return res;
+}
+// ----
+//快速幂算法（也称为二进制求幂）
+//参考https://leetcode.cn/problems/powx-n/solutions/2858114/tu-jie-yi-zhang-tu-miao-dong-kuai-su-mi-ykp3i/
+//如13=1101(2)  x^13=x^8*x^4*x^1     每次当n的最低位为1时，判断&1最低位是否为1,是的话就把当前的x乘到结果中，然后x自乘(每次while都自乘,每次都判断是否要乘以自乘得出的x^2,x^4,x^8等等)，n右移一位
+//   1     1   0   1
+//   x^8  x^4 x^2  x^1
+double myPow(double x, int N) {
+    double ans = 1;
+    long long n = N;
+    if (n < 0) { // x^-n = (1/x)^n
+        n = -n;
+        x = 1 / x;
+    }
+    while (n) { // 从低到高枚举 n 的每个比特位
+        if (n & 1) { // 这个比特位是 1
+            ans *= x; // 把 x 乘到 ans 中
+        }
+        x *= x; // x 自身平方
+        n >>= 1; // 继续枚举下一个比特位
+    }
+    return ans;
+}
+

@@ -289,15 +289,24 @@
   // }
 //---------------------------------------
 //2961
+// int main() {
+//     vector<vector<int>> variables = {{2,3,3,10}, {3,3,3,1}, {6,1,1,4}};
+//     int target = 2;
+//     vector<int> result = getGoodIndices(variables, target);
+//     cout << "Good indices: ";
+//     for (int index : result) {
+//         cout << index << " ";
+//     }
+//     cout << endl;
+//     return 0;
+// }
+//---------------------------------------
+//3111
 int main() {
-    vector<vector<int>> variables = {{2,3,3,10}, {3,3,3,1}, {6,1,1,4}};
-    int target = 2;
-    vector<int> result = getGoodIndices(variables, target);
-    cout << "Good indices: ";
-    for (int index : result) {
-        cout << index << " ";
-    }
-    cout << endl;
+    std::vector<std::vector<int>> points = {{2, 1}, {1, 0}, {1, 4}, {1, 8}, {3, 5}, {4, 6}};
+    int w = 1;
+    int result = minRectanglesToCoverPoints(points, w);
+    std::cout << "The minimum number of rectangles needed: " << result << std::endl;
     return 0;
 }
-
+//--------------------------------------

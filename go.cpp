@@ -706,4 +706,27 @@ double myPow(double x, int N) {
     }
     return ans;
 }
+//---------------------------------------------
+//3111
+int minRectanglesToCoverPoints(vector<vector<int>>& points, int w) {
+    ranges::sort(points, [](const auto& p, const auto& q) {
+        return p[0] < q[0];
+    });
+    //这里的cmp函数是lambda表达式
+    // sort(points.begin(), points.end(), [](const auto& p, const auto& q) {
+    // return p[0] < q[0];
+    // });
+    // 第二种写法使用了C++标准库中的std::sort函数，它接受三个参数：要排序的范围的开始和结束迭代器，以及一个比较函数。比较函数接受两个参数，并返回一个布尔值，表示第一个参数是否应该排在第二个参数之前。
+    // 第一种写法使用了C++20中引入的ranges库中的ranges::sort函数。这个函数的用法和std::sort类似，但是它使用的是范围（range）而不是迭代器。范围可以是一个容器、一个子范围，或者任何其他可以迭代的对象。
+    int ans = 0;
+    int x2 = -1;
+    for (auto& p : points) {
+        if (p[0] > x2) {    //如果p[0]大于x2，说明需要一个新的矩形
+            ans++;
+            x2 = p[0] + w;      //采用新矩形后更新x2值,之后比较排序后的points中的点的横坐标是否大于x2(矩形左边界放在点上,右边界为x2)
+        }
+    }
+    return ans;
+}
+//----------------------------------------------
 

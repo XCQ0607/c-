@@ -1063,3 +1063,199 @@ cout << "Map size: " << map.size() << endl;
 解决方案:参考https://blog.csdn.net/zhg_ploi/article/details/131774146
 在设置中将所有的编码改为UTF-8
 记得按ctrl+shift+alt+/打开Clion的注册表，将run.processes.withpty设置为打开
+
+
+
+二叉树是一种常见且重要的数据结构，它具有许多特性。以下是二叉树的主要性质：
+节点数量关系：
+第i层的最大节点数为 2^(i-1)，i >= 1。
+深度为k的二叉树最多有 2^k - 1 个节点。
+叶子节点与度为2的节点关系：
+对于任何非空二叉树，若叶子节点数为n0，度为2的节点数为n2，则 n0 = n2 + 1。
+高度与节点数关系：
+具有n个节点的完全二叉树的高度为 ⌊log2(n)⌋ + 1。
+n个节点的二叉树的最小高度为 ⌈log2(n+1)⌉。
+结构特性：
+每个节点最多有两个子节点（左子节点和右子节点）。
+二叉树的子树有左右之分，其顺序不能任意颠倒。
+完全二叉树特性：
+若有n个节点，则它们可以按层序编号，对任一节点i（1 <= i <= n），有：
+如果i = 1，则节点i是根；如果i > 1，则其父节点是 ⌊i/2⌋。
+如果2i <= n，则其左子节点是2i；否则没有左子节点。
+如果2i+1 <= n，则其右子节点是2i+1；否则没有右子节点。
+满二叉树特性：
+所有叶子节点都在最底层。
+每个非叶子节点都有两个子节点。
+节点总数为 2^h - 1，其中h为树的高度。
+遍历特性：
+中序遍历可以得到二叉搜索树的有序序列。
+已知前序和中序遍历（或后序和中序遍历）可以唯一确定一棵二叉树。
+平衡性（对于平衡二叉树）：
+任意节点的左右子树高度差不超过1。
+二叉搜索树特性：
+左子树上所有节点的值均小于根节点的值。
+右子树上所有节点的值均大于根节点的值。
+左右子树也分别为二叉搜索树。
+这些性质在理解二叉树结构、设计算法和解决相关问题时非常有用。不同类型的二叉树（如平衡二叉树、二叉搜索树等）可能还有其他特定的性质。
+
+根节点i=0,左子节点2i+1,右子节点2i+2,父节点(i-1)/2
+根节点1=1,左子节点2i,右子节点2i+1,父节点(i-1)/2
+
+前序遍历：根节点 -> 左子树 -> 右子树
+中序遍历：左子树 -> 根节点 -> 右子树
+后序遍历：左子树 -> 右子树 -> 根节点
+
+
+前缀、中缀和后缀表达式的例子+图形化
+简单的加法表达式
+中缀：A + B
+前缀：+ A B
+后缀：A B +
+图形化表示：
+    +
+   / \
+  A   B
+
+
+包含乘法的表达式
+中缀：(A + B) * C
+前缀：* + A B C
+后缀：A B + C *
+图形化表示：
+      *
+     / \
+    +   C
+   / \
+  A   B
+
+
+更复杂的表达式
+中缀：(A + B) * (C - D)
+前缀：* + A B - C D
+后缀：A B + C D - *
+图形化表示：
+        *
+       / \
+      +   -
+     / \ / \
+    A  B C  D
+
+包含除法的表达式
+中缀：(A + B * C) / (D - E)
+前缀：/ + A * B C - D E
+后缀：A B C * + D E - /
+图形化表示：
+         /
+        / \
+       +   -
+      / \  / \
+     A   * D  E
+        / \
+       B   C
+
+
+包含幂运算的表达式
+中缀：A^2 + (B * C)
+前缀：+ ^ A 2 * B C
+后缀：A 2 ^ B C * +
+图形化表示：
+        +
+       / \
+      ^   *
+     / \  / \
+    A   2 B  C
+
+
+前缀和后缀表达式的一个主要优点是它们不需要括号来表示运算的优先级，这使得它们更容易被计算机处理。
+
+在实际应用中：
+中缀表达式是我们日常使用的最常见形式，对人类来说最易读。
+前缀表达式（也称为波兰表示法）在某些编程语言（如Lisp）中使用。
+后缀表达式（也称为逆波兰表示法）在某些计算器和栈式计算机中使用。
+
+
+std::sort与ranges::sort的主要区别:
+
+命名空间:
+std::sort位于<algorithm>头文件中的std命名空间
+ranges::sort位于<algorithm>头文件中的std::ranges命名空间
+接口设计:
+std::sort需要传递迭代器:
+   std::vector<int> v = {3, 1, 4, 1, 5, 9};
+   std::sort(v.begin(), v.end());
+ranges::sort可以直接传递容器:
+   std::vector<int> v = {3, 1, 4, 1, 5, 9};
+   std::ranges::sort(v);
+投影(Projection)支持: ranges::sort支持投影,允许在排序前对元素进行转换:
+   struct Person {
+     std::string name;
+     int age;
+   };
+   std::vector<Person> people = {/*...*/};
+   std::ranges::sort(people, {}, &Person::age); // 按年龄排序
+
+   调用中的三个参数：
+   第一个参数 people:
+   这是要排序的范围（在这个例子中是一个 std::vector<Person>）。ranges::sort 可以直接接受一个容器作为其第一个参数，这是它相比 std::sort 的一个主要优势。
+   第二个参数 {}:
+   这是比较器（comparator）。空的花括号 {} 表示使用默认的比较器。在这个上下文中，它等同于 std::less<>，这会使用 < 运算符来比较元素。如果你想要自定义比较逻辑，可以在这里传入一个自定义的比较函数或函数对象。
+   第三个参数 &Person::age:
+   这是投影（projection）。它指定了在比较之前应该如何"查看"每个元素。在这个例子中，&Person::age 是一个指向 Person 类的 age 成员的指针。这意味着排序将基于 age 字段进行，而不是整个 Person 对象。
+
+   bool compareValue(const auto& a, const auto& b) {
+       return a.value < b.value;    //b大返回true,返回true则a在b前面
+   }
+   std::sort(v.begin(), v.end(), compareValue);
+   //从小到大排序
+
+ lambda 表达式
+auto cmp = [](const auto& a, const auto& b) { return a.value < b.value; };
+std::sort(v.begin(), v.end(), cmp);
+
+使用函数对象：
+   struct CompareValue {
+       bool operator()(const auto& a, const auto& b) const {
+           return a.value < b.value;
+       }
+   };
+   std::sort(v.begin(), v.end(), CompareValue{});
+在 std::sort 调用中，CompareValue{} 是在创建一个 CompareValue 类型的临时对象。
+CompareValue 是一个函数对象（也称为仿函数）。
+它定义了 operator() 函数，使得 CompareValue 的实例可以像函数一样被调用。
+或者，你也可以直接构造一个命名对象：
+CompareValue comparator;
+std::sort(v.begin(), v.end(), comparator);
+
+operator() 是C++语言特别设计的一个操作符重载，专门用于实现函数调用语法。
+它被称为"函数调用操作符"或"函数对象操作符"。
+语法一致性：
+使用 operator() 允许对象像函数一样被调用，保持了语法的一致性。
+例如，如果 obj 是一个重载了 operator() 的类的实例，你可以这样使用它：obj(arg1, arg2)，就像调用一个普通函数一样。
+灵活性：
+operator() 可以接受任意数量的参数，这使得它非常灵活。
+你可以定义多个 operator() 函数，只要它们的参数列表不同（函数重载）。
+eg:
+class Multiplier {
+public:
+    int operator()(int a, int b) const {
+        return a * b;
+    }
+};
+
+int main() {
+    Multiplier mult;
+    int result = mult(5, 3);  // 调用 operator()，结果为 15
+    return 0;
+}
+在这个例子中，mult(5, 3) 看起来就像是在调用一个名为 mult 的函数，但实际上它是在调用 Multiplier 类的 operator()。
+
+
+
+reduce 函数
+reduce 是 C++17 引入的一个算法函数，位于 <numeric> 头文件中。它用于将一个范围内的元素归约（reduce）成一个单一的值。
+cards.begin(): 开始迭代的位置
+cards.begin() + cnt: 结束迭代的位置（不包含此位置）
+0: 初始值
+这个函数的作用是将 cards 向量中从开始到第 cnt 个元素的所有值相加，初始值为 0。
+
+例如，如果 cards 是 {9, 8, 2, 1}，cnt 是 3，那么这行代码就相当于计算 0 + 9 + 8 + 2，结果是 19。

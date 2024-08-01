@@ -1049,6 +1049,7 @@ go.cpp文件
         return res;
     }
 -------------------------------
+3111
 题目:
 给你一个二维整数数组 point ，其中 points[i] = [xi, yi] 表示二维平面内的一个点。同时给你一个整数 w 。你需要用矩形 覆盖所有 点。
 每个矩形的左下角在某个点 (x1, 0) 处，且右上角在某个点 (x2, y2) 处，其中 x1 <= x2 且 y2 >= 0 ，同时对于每个矩形都 必须 满足 x2 - x1 <= w 。
@@ -1091,3 +1092,45 @@ go.cpp文件
         }
         return ans;
     }
+---------------------------------------------------
+40
+题目:
+「力扣挑战赛」心算项目的挑战比赛中，要求选手从 N 张卡牌中选出 cnt 张卡牌，若这 cnt 张卡牌数字总和为偶数，则选手成绩「有效」且得分为 cnt 张卡牌数字总和。 给定数组 cards 和 cnt，其中 cards[i] 表示第 i 张卡牌上的数字。 请帮参赛选手计算最大的有效得分。若不存在获取有效得分的卡牌方案，则返回 0。
+
+示例 1：
+输入：cards = [1,2,8,9], cnt = 3
+输出：18
+解释：选择数字为 1、8、9 的这三张卡牌，此时可获得最大的有效得分 1+8+9=18。
+示例 2：
+输入：cards = [3,3,1], cnt = 1
+输出：0
+解释：不存在获取有效得分的卡牌方案。
+解答：
+go.cpp文件
+    int maxmiumScore(vector<int>& cards, int cnt) {
+        ranges::sort(cards, greater());
+        int s = reduce(cards.begin(), cards.begin() + cnt, 0); // 最大的 cnt 个数之和
+        if (s % 2 == 0) { // s 是偶数
+            return s;
+        }
+
+        auto replace_sum = [&](int x) -> int {
+            for (int i = cnt; i < cards.size(); i++) {
+                if (cards[i] % 2 != x % 2) { // 找到一个最大的奇偶性和 x 不同的数
+                    return s - x + cards[i]; // 用 cards[i] 替换 s
+                }
+            }
+            return 0;
+        };
+
+        int x = cards[cnt - 1];
+        int ans = replace_sum(x); // 替换 x
+        for (int i = cnt - 2; i >= 0; i--) { // 前 cnt-1 个数
+            if (cards[i] % 2 != x % 2) { // 找到一个最小的奇偶性和 x 不同的数
+                ans = max(ans, replace_sum(cards[i])); // 替换
+                break;
+            }
+        }
+        return ans;
+    }
+

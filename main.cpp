@@ -26,7 +26,7 @@
 //     TreeNode* root = new TreeNode(1);
 //     root->right = new TreeNode(2);
 //     root->right->left = new TreeNode(3);
-    
+
 //     vector<int> result = inorderTraversal(root);
 //     for(int val : result) {   //for的条件：指定一个容器，然后遍历这个容器中的每个元素，val是容器中的每个元素
 //         cout << val << " ";
@@ -276,17 +276,17 @@
 // }
 //-------------------------------------
 // 699
-  // int main() {
-  //     vector<vector<int>> positions = {{1,2},{2,3},{6,1}};
-  //     vector<int> result = fallingSquares(positions);
-  //     cout << "Output: [";
-  //     for (int i = 0; i < result.size(); ++i) {
-  //         cout << result[i];
-  //         if (i < result.size() - 1) cout << ",";
-  //     }
-  //     cout << "]" << endl;
-  //     return 0;
-  // }
+// int main() {
+//     vector<vector<int>> positions = {{1,2},{2,3},{6,1}};
+//     vector<int> result = fallingSquares(positions);
+//     cout << "Output: [";
+//     for (int i = 0; i < result.size(); ++i) {
+//         cout << result[i];
+//         if (i < result.size() - 1) cout << ",";
+//     }
+//     cout << "]" << endl;
+//     return 0;
+// }
 //---------------------------------------
 //2961
 // int main() {
@@ -302,11 +302,21 @@
 // }
 //---------------------------------------
 //3111
-int main() {
-    std::vector<std::vector<int>> points = {{2, 1}, {1, 0}, {1, 4}, {1, 8}, {3, 5}, {4, 6}};
-    int w = 1;
-    int result = minRectanglesToCoverPoints(points, w);
-    std::cout << "The minimum number of rectangles needed: " << result << std::endl;
+// int main() {
+//     std::vector<std::vector<int>> points = {{2, 1}, {1, 0}, {1, 4}, {1, 8}, {3, 5}, {4, 6}};
+//     int w = 1;
+//     int result = minRectanglesToCoverPoints(points, w);
+//     std::cout << "The minimum number of rectangles needed: " << result << std::endl;
+//     return 0;
+// }
+//--------------------------------------
+int main()
+{
+    vector<int> cards = {1, 2, 7, 9, 11};
+    int cnt = 3;
+    int result = maxmiumScore(cards, cnt);
+    cout << "Maximum valid score: " << result << endl;
     return 0;
 }
+
 //--------------------------------------

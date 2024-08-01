@@ -1,3 +1,4 @@
+#include <numeric>
 #include <vector>
 using namespace std;
 
@@ -690,8 +691,8 @@ vector<int> getGoodIndices(vector<vector<int>>& variables, int target) {
 //如13=1101(2)  x^13=x^8*x^4*x^1     每次当n的最低位为1时，判断&1最低位是否为1,是的话就把当前的x乘到结果中，然后x自乘(每次while都自乘,每次都判断是否要乘以自乘得出的x^2,x^4,x^8等等)，n右移一位
 //   1     1   0   1
 //   x^8  x^4 x^2  x^1
-double myPow(double x, int N) {
-    double ans = 1;
+long long myPow(double x, int N) {
+    long long ans = 1;
     long long n = N;
     if (n < 0) { // x^-n = (1/x)^n
         n = -n;
@@ -729,4 +730,31 @@ int minRectanglesToCoverPoints(vector<vector<int>>& points, int w) {
     return ans;
 }
 //----------------------------------------------
+int maxmiumScore(vector<int>& cards, int cnt) {
+    ranges::sort(cards, greater<>());       //可省略模板参数<int>为<>或空       想法就是lesser<>()函数返回一个比较函数，从小到大排序(默认的,所以可以省略)
+    int s = reduce(cards.begin(), cards.begin() + cnt, 0); // 最大的 cnt 个数之和
+    //reduce是相加函数
+    if (s % 2 == 0) { // s 是偶数
+        return s;
+    }
 
+    auto replace_sum = [&](int x) -> int {
+        for (int i = cnt; i < cards.size(); i++) {
+            if (cards[i] % 2 != x % 2) { // 找到一个最大的奇偶性和 x 不同的数
+                return s - x + cards[i]; // 用 cards[i] 替换 s
+            }
+        }
+        return 0;
+    };
+
+    int x = cards[cnt - 1];     //从大到小排列第cnt个数
+    int ans = replace_sum(x); // 替换 x
+    for (int i = cnt - 2; i >= 0; i--) { // 前 cnt-1 个数
+        if (cards[i] % 2 != x % 2) { // 找到一个最小的奇偶性和 x 不同的数      优化计算
+            ans = max(ans, replace_sum(cards[i])); // 替换
+            break;
+        }
+    }
+    return ans;
+}
+//----------------------------------------------

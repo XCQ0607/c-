@@ -1054,7 +1054,7 @@ if (map.count("two") > 0) {
 map["four"] = 4;  // 使用 operator[] 插入新元素
 cout << "Map size: " << map.size() << endl;
 
-
+----------------------------------------
 解决中文乱码问题请参考https://blog.csdn.net/weixin_63030308/article/details/134084909
 语言首选项->语言.相关设置（管理语言设置）->更改系统区域设置->勾选【Beta】，等待重启。
 ☑Beta版：使用Unicode UTF-8提供全球语言支持(U)
@@ -1062,8 +1062,8 @@ cout << "Map size: " << map.size() << endl;
 但是有一个缺点是:此时运行一些中文程序可能会出现乱码。如图吧工具箱
 解决方案:参考https://blog.csdn.net/zhg_ploi/article/details/131774146
 在设置中将所有的编码改为UTF-8
-记得按ctrl+shift+alt+/打开Clion的注册表，将run.processes.withpty设置为打开
-
+记得按ctrl+shift+alt+/打开Clion的注册表，将run.processes.withpty设置为关闭
+----------------------------------------
 
 
 二叉树是一种常见且重要的数据结构，它具有许多特性。以下是二叉树的主要性质：

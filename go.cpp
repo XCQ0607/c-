@@ -730,6 +730,7 @@ int minRectanglesToCoverPoints(vector<vector<int>>& points, int w) {
     return ans;
 }
 //----------------------------------------------
+// 40
 int maxmiumScore(vector<int>& cards, int cnt) {
     ranges::sort(cards, greater<>());       //可省略模板参数<int>为<>或空       想法就是lesser<>()函数返回一个比较函数，从小到大排序(默认的,所以可以省略)
     int s = reduce(cards.begin(), cards.begin() + cnt, 0); // 最大的 cnt 个数之和
@@ -753,6 +754,53 @@ int maxmiumScore(vector<int>& cards, int cnt) {
         if (cards[i] % 2 != x % 2) { // 找到一个最小的奇偶性和 x 不同的数      优化计算
             ans = max(ans, replace_sum(cards[i])); // 替换
             break;
+        }
+    }
+    return ans;
+}
+//----------------------------------------------
+// 2940
+vector<int> leftmostBuildingQueries(vector<int>& heights, vector<vector<int>>& queries) {
+    vector<int> ans(queries.size(), -1);
+    vector<vector<pair<int, int>>> qs(heights.size());
+    for (int i = 0; i < queries.size(); i++)
+    {
+        int a = queries[i][0], b = queries[i][1];
+        if (a > b) {
+            swap(a, b); // 保证 a <= b
+        }
+        //swap结束,此时a<=b
+        if (a == b || heights[a] < heights[b]) {
+            ans[i] = b; // a 直接跳到 b
+        } else {
+            qs[b].emplace_back(heights[a], i); // 离线询问     储存i是为了在最后更新ans[i]的值
+        }
+    }
+// 0	[ ]
+// 1	[(6, 0)]
+// 2	[ ]
+// 3	[(6, 1)]
+// 4	[(8, 2), (5, 3)]
+// 5	[ ]
+//prior_queue是优先队列，它是一种特殊的队列，它的元素按照一定的优先级进行排序。优先队列中的元素可以按照任意顺序插入，但是每次取出的元素都是优先级最高的元素。
+// priority_queue 中的三个参数： priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>>
+// 第一个参数 pair<int, int>：这是队列中存储的元素类型。在这里，每个元素是一个整数对，第一个整数表示建筑高度，第二个整数表示查询索引。
+// 第二个参数 vector<pair<int, int>>：这是用于存储元素的底层容器类型。priority_queue 默认使用 vector，但这里显式指定是为了清晰。
+// 第三个参数 greater<>：这是比较函数对象，用于决定元素的优先级。使用 greater<> 意味着这是一个小顶堆，即最小的元素会被优先处理。
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;   // pq是一个优先队列，它按照pair的第一个元素进行升序排序
+// 其中：
+// 第一个 int 是建筑的高度
+// 第二个 int 是查询的索引
+    //heights = [6, 4, 8, 5, 2, 7] 和 queries = [[0, 1], [0, 3], [2, 4], [3, 4], [2, 2]]
+    for (int i = 0; i < heights.size(); i++) {  //遍历hights的索引
+        while (!pq.empty() && pq.top().first < heights[i]) {
+            // 堆顶的 heights[a] 可以跳到 heights[i]
+            ans[pq.top().second] = i;
+            pq.pop();   // pq.top()是堆顶元素，pq.pop()是删除堆顶元素
+        }
+        for (auto& p : qs[i]) {     //处理离线询问,qs[i]即要在该index下处理的询问,存入pq中是a的高度和查询的索引,在i++后while函数会处理这些询问
+            pq.emplace(p); // 后面再回答
+            //emplace()函数是C++ STL中vector容器的一个成员函数，用于在vector的末尾添加一个元素。与push_back()函数不同的是，emplace()函数可以直接在vector的末尾构造一个元素，而不是先创建一个临时对象再将其复制或移动到vector中。这使得emplace()函数在某些情况下比push_back()函数更高效。
         }
     }
     return ans;

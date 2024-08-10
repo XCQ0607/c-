@@ -310,13 +310,29 @@
 //     return 0;
 // }
 //--------------------------------------
-int main()
-{
-    vector<int> cards = {1, 2, 7, 9, 11};
-    int cnt = 3;
-    int result = maxmiumScore(cards, cnt);
-    cout << "Maximum valid score: " << result << endl;
+// 40
+// int main()
+// {
+//     vector<int> cards = {1, 2, 7, 9, 11};
+//     int cnt = 3;
+//     int result = maxmiumScore(cards, cnt);
+//     cout << "Maximum valid score: " << result << endl;
+//     return 0;
+// }
+
+//--------------------------------------
+// 2940
+int main() {
+    vector<int> heights = {6, 4, 8, 5, 2, 7};
+    vector<vector<int>> queries = {{0, 1}, {0, 3}, {2, 4}, {3, 4}, {2, 2}};
+
+    vector<int> result = leftmostBuildingQueries(heights, queries);
+
+    for (int res : result) {
+        cout << res << " ";
+    }
+    cout << endl;
+
     return 0;
 }
 
-//--------------------------------------

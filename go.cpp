@@ -806,3 +806,26 @@ vector<int> leftmostBuildingQueries(vector<int>& heights, vector<vector<int>>& q
     return ans;
 }
 //----------------------------------------------
+//1035
+int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+    int dp[510] = {0};
+    for(int i=0;i<nums1.size();i++) {
+        for(int j=nums2.size()-1;j>=0;j--) if(nums1[i]==nums2[j]) {
+            if(j>=1) dp[j] = max(dp[j],dp[j-1]+1);
+            else dp[j] = max(dp[j],1);  //前面有if判断了nums1[i]==nums2[j],所以这里dp[0]一定大于等于1,设置为max(dp[j],1)
+        }
+// 作用：
+// 传播最优解：这个循环确保较小索引处的最优解可以传播到较大的索引。
+// 维护单调性：确保dp数组在每一行都是单调非递减的。
+// 处理不匹配情况：即使当前元素不匹配，我们也要考虑之前的最优解。
+        // 这个步骤很重要，因为它确保了即使我们没有在当前位置找到匹配，我们也能利用之前的最优解。
+        for(int j=1;j<nums2.size();j++) {
+            dp[j] = max(dp[j], dp[j-1]);
+        }
+    }
+    return dp[nums2.size()-1];
+}
+// dp[j]表示考虑nums1的前i个元素和nums2的前j个元素时的最大不相交线数量。
+// 当nums1[i] == nums2[j]时,我们可以连接这两个数字,所以dp[j]可以更新为dp[j-1] + 1。
+// 我们还需要考虑不连接当前数字的情况,所以要取max(dp[j], dp[j-1])。
+//----------------------------------------------

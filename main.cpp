@@ -322,17 +322,28 @@
 
 //--------------------------------------
 // 2940
+// int main() {
+//     vector<int> heights = {6, 4, 8, 5, 2, 7};
+//     vector<vector<int>> queries = {{0, 1}, {0, 3}, {2, 4}, {3, 4}, {2, 2}};
+//
+//     vector<int> result = leftmostBuildingQueries(heights, queries);
+//
+//     for (int res : result) {
+//         cout << res << " ";
+//     }
+//     cout << endl;
+//
+//     return 0;
+// }
+//--------------------------------------
+//1035
 int main() {
-    vector<int> heights = {6, 4, 8, 5, 2, 7};
-    vector<vector<int>> queries = {{0, 1}, {0, 3}, {2, 4}, {3, 4}, {2, 2}};
+    vector<int> nums1 = {1,4,2};
+    vector<int> nums2 = {1,2,4};
 
-    vector<int> result = leftmostBuildingQueries(heights, queries);
+    int result = maxUncrossedLines(nums1, nums2);
 
-    for (int res : result) {
-        cout << res << " ";
-    }
-    cout << endl;
+    cout << "Maximum number of uncrossed lines: " << result << endl;
 
     return 0;
 }
-

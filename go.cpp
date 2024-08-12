@@ -829,3 +829,37 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
 // 当nums1[i] == nums2[j]时,我们可以连接这两个数字,所以dp[j]可以更新为dp[j-1] + 1。
 // 我们还需要考虑不连接当前数字的情况,所以要取max(dp[j], dp[j-1])。
 //----------------------------------------------
+//676
+class MagicDictionary {
+private:
+    unordered_map<int, vector<string>> umap;
+    //unorderd_map<int, vector<string>>：其中int表示字符串的长度，vector<string>表示具有该长度的字符串集合。
+    //unorderd_map是一种基于哈希表实现的关联容器，它存储的元素是键值对(key-value pairs)。在这个例子中，键是字符串的长度，值是一个字符串的向量，表示具有该长度的所有字符串。
+public:
+    MagicDictionary() {}
+
+    void buildDict(vector<string> dictionary) {
+        for (auto& str : dictionary) {
+            umap[str.size()].push_back(str);
+        }
+    }
+
+    bool search(string searchWord) {
+        int n = searchWord.size();
+        vector<string> strs = umap[n];
+        for (string str : strs) {
+            int cnt = 0;
+            for (int i = 0; i < n; ++i) {
+                if (str[i] != searchWord[i]) {
+                    ++cnt;
+                }
+                if (cnt > 1) break;
+                if (i == n - 1 && cnt == 1) return true;
+// 如果我们只检查 cnt == 1，可能会在字符串中间就返回 true，这是不正确的。
+// 我们需要确保已经比较完整个字符串（i == n - 1），并且整个过程中只有一个字符不同（cnt == 1）。
+            }
+        }
+        return false;
+    }
+};
+//----------------------------------------------

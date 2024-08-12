@@ -337,13 +337,31 @@
 // }
 //--------------------------------------
 //1035
+// int main() {
+//     vector<int> nums1 = {1,4,2};
+//     vector<int> nums2 = {1,2,4};
+//
+//     int result = maxUncrossedLines(nums1, nums2);
+//
+//     cout << "Maximum number of uncrossed lines: " << result << endl;
+//
+//     return 0;
+// }
+//--------------------------------------
+//676
 int main() {
-    vector<int> nums1 = {1,4,2};
-    vector<int> nums2 = {1,2,4};
-
-    int result = maxUncrossedLines(nums1, nums2);
-
-    cout << "Maximum number of uncrossed lines: " << result << endl;
-
+    MagicDictionary magicDictionary;
+    vector<string> dictionary = {"hello", "leetcode"};
+    magicDictionary.buildDict(dictionary);
+    cout << boolalpha;
+    //boolalpha用于控制输出bool类型时，输出true或false，而不是1或0
+    //类似的，boolalpha也可以用于输入，将输入的true或false转换为bool类型
+    //如:cin >> boolalpha;
+    //当输入true时，cin会将其转换为bool类型的true
+    cout << magicDictionary.search("hello") << endl;    // false
+    cout << magicDictionary.search("hhllo") << endl;    // true
+    cout << magicDictionary.search("hell") << endl;     // false
+    cout << magicDictionary.search("leetcoded") << endl; // false
     return 0;
 }
+//--------------------------------------

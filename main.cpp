@@ -349,19 +349,27 @@
 // }
 //--------------------------------------
 //676
+// int main() {
+//     MagicDictionary magicDictionary;
+//     vector<string> dictionary = {"hello", "leetcode"};
+//     magicDictionary.buildDict(dictionary);
+//     cout << boolalpha;
+//     //boolalpha用于控制输出bool类型时，输出true或false，而不是1或0
+//     //类似的，boolalpha也可以用于输入，将输入的true或false转换为bool类型
+//     //如:cin >> boolalpha;
+//     //当输入true时，cin会将其转换为bool类型的true
+//     cout << magicDictionary.search("hello") << endl;    // false
+//     cout << magicDictionary.search("hhllo") << endl;    // true
+//     cout << magicDictionary.search("hell") << endl;     // false
+//     cout << magicDictionary.search("leetcoded") << endl; // false
+//     return 0;
+// }
+//--------------------------------------
+//3151
 int main() {
-    MagicDictionary magicDictionary;
-    vector<string> dictionary = {"hello", "leetcode"};
-    magicDictionary.buildDict(dictionary);
-    cout << boolalpha;
-    //boolalpha用于控制输出bool类型时，输出true或false，而不是1或0
-    //类似的，boolalpha也可以用于输入，将输入的true或false转换为bool类型
-    //如:cin >> boolalpha;
-    //当输入true时，cin会将其转换为bool类型的true
-    cout << magicDictionary.search("hello") << endl;    // false
-    cout << magicDictionary.search("hhllo") << endl;    // true
-    cout << magicDictionary.search("hell") << endl;     // false
-    cout << magicDictionary.search("leetcoded") << endl; // false
+    std::vector<int> nums = {1};
+    bool result = isArraySpecial(nums);
+    std::cout << (result ? "true" : "false") << std::endl;
     return 0;
 }
 //--------------------------------------

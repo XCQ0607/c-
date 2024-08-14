@@ -366,10 +366,25 @@
 // }
 //--------------------------------------
 //3151
-int main() {
-    std::vector<int> nums = {1};
-    bool result = isArraySpecial(nums);
-    std::cout << (result ? "true" : "false") << std::endl;
+// int main() {
+//     std::vector<int> nums = {1};
+//     bool result = isArraySpecial(nums);
+//     std::cout << (result ? "true" : "false") << std::endl;
+//     return 0;
+// }
+//--------------------------------------
+//3152
+int main()
+{
+    vector<int> nums = {4,3,1,6};
+    vector<vector<int>> queries = {{0,2},{2,3}};
+
+    vector<bool> result = isArraySpecial(nums, queries);
+
+    for (bool b : result) {
+        cout << (b ? "true" : "false") << " ";
+    }
+    cout << endl;
+
     return 0;
 }
-//--------------------------------------

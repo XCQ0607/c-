@@ -1,7 +1,8 @@
 [
 {
-  "directory": "/cloudide/workspace/C/build",
-  "command": "/usr/bin/g++   -g -std=gnu++17 -o CMakeFiles/main.dir/main.cpp.o -c /cloudide/workspace/C/main.cpp",
-  "file": "/cloudide/workspace/C/main.cpp"
+  "directory": "E:/CLionProjects/c-/build",
+  "command": "\"D:\\Program Files (x86)\\C\\14.2.0\\mingw64\\bin\\g++.exe\"   -g -std=gnu++20 -o CMakeFiles\\main.dir\\main.cpp.obj -c E:\\CLionProjects\\c-\\main.cpp",
+  "file": "E:/CLionProjects/c-/main.cpp",
+  "output": "CMakeFiles/main.dir/main.cpp.obj"
 }
 ]

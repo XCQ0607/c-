@@ -1,5 +1,8 @@
 #include <numeric>
 #include <vector>
+#include <string>
+#include <functional>
+#include <ranges>
 using namespace std;
 
 //--------------------------------------------------------------
@@ -553,23 +556,23 @@ int minimumOperations(string num)
 // 这种处理方式实际上巧妙地处理了无解的情况。当没有办法通过删除部分字符使数字变为特殊数字时，删除所有字符（或除了一个 '0' 之外的所有字符）成为了默认的"解"，尽管这并不会产生一个特殊数字。
 //-----------------------------------------------
 //3011
-bool canSortArray(vector<int>& nums)
-{
-    for (int i = 0, n = nums.size(); i < n;)
-    {
-        int start = i;
-        int ones = __builtin_popcount(nums[i++]);
-        //__builtin_popcount 是 GCC（GNU Compiler Collection）提供的一个内置函数，用于计算一个整数的二进制表示中 1 的个数。
-        //__builtin_popcount 函数计算的是二进制表示中 1 的个数。如果你需要计算 0 的个数，你可以使用 __builtin_popcount(~x)，其中 x 是你的整数。~ 是按位取反运算符，它会将 x 的每一位都取反，所以 __builtin_popcount(~x) 计算的是 x 的二进制表示中 0 的个数。
-        while (i < n && __builtin_popcount(nums[i]) == ones)
-        {
-            i++;
-        }
-        sort(nums.begin() + start, nums.begin() + i);
-    }
-    return ranges::is_sorted(nums);
-    //is_orted 是 C++20 中引入的一个函数，用于检查一个范围（range）是否已经排序。如果范围已经排序，它返回 true；否则，返回 false。
-}
+// bool canSortArray(vector<int>& nums)
+// {
+//     for (int i = 0, n = nums.size(); i < n;)
+//     {
+//         int start = i;
+//         int ones = __builtin_popcount(nums[i++]);
+//         //__builtin_popcount 是 GCC（GNU Compiler Collection）提供的一个内置函数，用于计算一个整数的二进制表示中 1 的个数。
+//         //__builtin_popcount 函数计算的是二进制表示中 1 的个数。如果你需要计算 0 的个数，你可以使用 __builtin_popcount(~x)，其中 x 是你的整数。~ 是按位取反运算符，它会将 x 的每一位都取反，所以 __builtin_popcount(~x) 计算的是 x 的二进制表示中 0 的个数。
+//         while (i < n && __builtin_popcount(nums[i]) == ones)
+//         {
+//             i++;
+//         }
+//         sort(nums.begin() + start, nums.begin() + i);
+//     }
+//     return ranges::is_sorted(nums);
+//     //is_orted 是 C++20 中引入的一个函数，用于检查一个范围（range）是否已经排序。如果范围已经排序，它返回 true；否则，返回 false。
+// }
 
 //--------------------------------------
 //3106
@@ -885,3 +888,154 @@ vector<bool> isArraySpecial(vector<int>& nums, vector<vector<int>>& queries) {
     }
     return ans;
 }
+//----------------------------------------------
+//64
+int minPathSum(std::vector<std::vector<int>>& grid) {
+    int m = grid.size();
+    int n = grid[0].size();
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == 0 && j == 0) continue; // Skip the starting cell
+            if (i == 0) grid[i][j] += grid[i][j - 1]; // First row
+            else if (j == 0) grid[i][j] += grid[i - 1][j]; // First column
+            else grid[i][j] += std::min(grid[i - 1][j], grid[i][j - 1]); // Min path sum
+        }
+    }
+    return grid[m - 1][n - 1]; // Return the bottom-right cell
+}
+//----------------------------------------------
+// 63
+int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+    int m = obstacleGrid.size();
+    int n = obstacleGrid[0].size();
+
+    // 如果起点或终点有障碍物，返回0
+    if (obstacleGrid[0][0] == 1 || obstacleGrid[m - 1][n - 1] == 1) {
+        return 0;
+    }
+    // 创建一个二维数组来存储路径数
+    // vector<vector<int>> dp(m, vector<int>(n, 0));    或者直接初始化为0
+    int dp[m][n];   //这样的话里面的数据是随机值,需要初始化，在下面有初始化dp[i][j]=0
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (obstacleGrid[i][j] == 1) {
+                dp[i][j] = 0; // 有障碍物的格子路径数为0
+            } else if (i == 0 && j == 0) {
+                dp[i][j] = 1; // 起点路径数为1
+            } else {
+                // dp[i][j] = 0的作用是初始化当前格子的路径数为0，以便后续累加从上方和左方到达的路径数。
+                dp[i][j] = 0;   
+                if (i > 0) dp[i][j] += dp[i - 1][j]; // 从上方到达
+                if (j > 0) dp[i][j] += dp[i][j - 1]; // 从左方到达
+            }
+        }
+    }
+    return dp[m - 1][n - 1]; // 返回右下角的路径数
+}
+//----------------------------------------------
+// 120. 三角形最小路径和
+int minimumTotal(std::vector<std::vector<int>>& triangle) {
+    int n = triangle.size();
+    
+    // 从倒数第二行开始向上计算最小路径和
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = 0; j <= i; j++) {
+            // 更新当前节点的值为其下方相邻节点的最小路径和
+            triangle[i][j] += std::min(triangle[i + 1][j], triangle[i + 1][j + 1]);
+        }
+    }
+    return triangle[0][0]; // 返回顶端的最小路径和
+}
+//hand write
+//     int n =triangle.size();
+//     for(int i=n-2;i>=0;i--){
+//     for(int  j=triangle[i].size()-1;j>=0;j--){
+//         triangle[i][j]+=min(triangle[i+1][j],triangle[i+1][j+1]);
+//     }
+// }
+// return triangle[0][0];
+//----------------------------------------------
+// 931. 下降路径最小和
+#include <cmath>
+//cmath头文件是C++标准库中的一个头文件，提供了数学函数和常量。
+//INT_MAX是cmath头文件中的一个常量，表示整数类型的最大值。
+//fmin(a, b) 函数返回 a 和 b 中的较小值。
+//与min(a, b)函数类似，fmin(a, b)函数也接受两个参数，并返回它们中的较小值。
+//不同的是，fmin函数可以处理浮点数类型，而min函数只能处理整数类型。
+int minFallingPathSum(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();   //m是矩阵的列数,每一行都有m个元素
+
+    // 从倒数第二行开始向上计算最小下降路径和
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = 0; j < m; j++) {
+            // 更新当前元素的值为其下方相邻元素的最小路径和
+            int down = matrix[i + 1][j]; // 正下方
+            int downLeft = (j > 0) ? matrix[i + 1][j - 1] : INT_MAX; // 左下方
+            int downRight = (j < m - 1) ? matrix[i + 1][j + 1] : INT_MAX; // 右下方
+
+            matrix[i][j] += fmin(down, fmin(downLeft, downRight));
+        }
+    }
+
+    // 找到第一行中的最小值
+    // int minPathSum = matrix[0][0];
+    // for (int j = 1; j < m; j++) {
+    //     if (matrix[0][j] < minPathSum) {
+    //         minPathSum = matrix[0][j];
+    //     }
+    // }
+    // return minPathSum; // 返回最小下降路径和
+
+    //或者直接调用函数
+    return *min_element(matrix[0].begin(), matrix[0].end());
+    //min_element函数是C++标准库中的一个函数，用于返回容器中具有最小值的元素。
+    //它接受两个参数：一个容器的开始迭代器和一个容器的结束迭代器。
+    //返回值是一个指向具有最小值的元素的迭代器。
+    //在这个例子中，matrix[0]是一个包含第一行的元素的向量。
+    //min_element(matrix[0].begin(), matrix[0].end())返回一个指向matrix[0]中具有最小值的元素的迭代器。
+    //*运算符用于解引用这个迭代器，从而得到最小值。
+    //如果是c语言，可以使用的函数是min_element(matrix[0], matrix[0] + m);
+}
+//hand write
+// for(int i =n-2;i>=0;i--){
+//     for(int j =0;j<m;j++){
+//         int d = matrix[i+1][j];
+//         int dl = (j>0)?matrix[i+1][j-1]:INT_MAX;
+//         int dr = (j<m-1)?matrix[i+1][j+1]:INT_MAX;
+//         matrix[i][j] += fmin(d,fmin(dl,dr));
+//     }
+// }
+// return *min_element(matrix[0].begin(),matrix[0].end());
+//----------------------------------------------
+// 221. 最大正方形
+// 动态规划
+// 状态定义：dp[i][j]表示以(i,j)为右下角的最大正方形的边长
+// 状态转移：dp[i][j] = min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]) + 1
+// 初始化：dp[i][j] = 0
+// 结果：dp[i][j]的最大值
+// 时间复杂度：O(n*m)
+// 空间复杂度：O(n*m)
+// 空间优化：使用一维数组
+int maximalSquare(vector<vector<char>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int dp[n][m];
+        int ans = 0;
+        for(int i =0;i<n;i++){
+            for(int j =0;j<m;j++){
+               if(matrix[i][j]=='1'){
+                dp[i][j] = 1;
+                if(i>0&&j>0){
+                dp[i][j] += min(dp[i-1][j],min(dp[i][j-1],dp[i-1][j-1]));
+               }
+               ans = max(ans,dp[i][j]);
+            }else{
+                dp[i][j] = 0;
+               }
+        }
+    }
+    return ans*ans;
+}
+//----------------------------------------------

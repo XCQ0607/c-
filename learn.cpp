@@ -37,7 +37,7 @@ void X::hello() {       //X 类的对象的方法
 }
 #include <limits>
 void X::data(){
-        cout << "type: \t\t" << "************size**************"<< endl;  
+    cout << "type: \t\t" << "************size**************"<< endl;  
     cout << "bool: \t\t" << "所占字节数：" << sizeof(bool);  
     cout << "\t最大值：" << (numeric_limits<bool>::max)();  
     cout << "\t\t最小值：" << (numeric_limits<bool>::min)() << endl;  
@@ -50,9 +50,9 @@ void X::data(){
     cout << "unsigned char: \t" << "所占字节数：" << sizeof(unsigned char);  
     cout << "\t最大值：" << (numeric_limits<unsigned char>::max)();  
     cout << "\t\t最小值：" << (numeric_limits<unsigned char>::min)() << endl;  
-    cout << "wchar_t: \t" << "所占字节数：" << sizeof(wchar_t);  
-    cout << "\t最大值：" << (numeric_limits<wchar_t>::max)();  
-    cout << "\t\t最小值：" << (numeric_limits<wchar_t>::min)() << endl;  
+    cout << "wchar_t: \t" << "所占字节数：" << sizeof(wchar_t) << endl;  
+    // cout << "\t最大值：" << (numeric_limits<wchar_t>::max)();
+    // cout << "\t\t最小值：" << (numeric_limits<wchar_t>::min)() << endl;
     cout << "short: \t\t" << "所占字节数：" << sizeof(short);  
     cout << "\t最大值：" << (numeric_limits<short>::max)();  
     cout << "\t\t最小值：" << (numeric_limits<short>::min)() << endl;  
@@ -105,7 +105,7 @@ void range(){
      extern int worknow;        // 声明外部变量，没有该行这一函数无法调用worknow
      cout << "extern调用worknow:" << worknow << endl;
 }
-int worknow = 9;        // 定义外部变量，此后函数可调用
+int worknow = 9;        // 定义外部变量，此后函数可调用，此前函数想要调用worknow需要在函数内声明extern
 void range1(){
     cout << "range1中调用此时的a-全局变量:" << allrange << endl;
     cout << "正常调用worknow : " << worknow << endl;
@@ -120,11 +120,12 @@ void function1() {
     // 尝试修改const变量，编译错误
     // constVar = 40;
     // mutable成员变量，可以在const成员函数中修改
+    //将const修饰的“成员函数”称为const成员函数，const修饰类成员函数，实际修饰该成员函数隐含的this指针，表明在该成员函数中不能对类的任何成员进行修改
+    // 作用：const成员函数保证在函数体内不会修改任何成员变量。（除非这些成员变量被声明为mutable）
     class MyClass {
     public:
-        mutable int mutableVar;
-
-        void constMemberFunc() const {
+        mutable int mutableVar; // mutable成员变量不仅可以在const成员函数中被修改，也可以在非const成员函数中被修改。
+        void constMemberFunc() const{
             mutableVar = 50; // 允许修改mutable成员变量
         }
     };
@@ -132,38 +133,80 @@ void function1() {
     thread_local int threadVar = 60;
 }
 
+
+// int d1,d2,d3,d4;
+// const int* p1; //修饰的是*p1指向的对象
+// //*p1=1;//不行,因为*p1是const的
+// //p1=&d1;//可以
+// int const* p2; //修饰的是*p2指向的对象
+// //*p2=2;//不行，因为*p2是const的
+// //p2=&d2;//可以
+// int* const p3; //修饰的是p3指向的内容（p3指向的地址）
+// //*p3=3;//可以
+// //p3=&d3;//不行，因为p3是const的
+// const int* const p4;//既修饰*p4指向的对象，又修饰p4指向的内容
+// //*p4=4；//不行，因为*p4是const的
+
+// 1. const int* p1
+// p1 是一个指针，它指向一个 const int 类型的对象。即p1指向的对象（*p1）是const的，这意味着你不能通过 p1 修改它所指向的 int 对象的内容。但是，可以改变 p1 本身的值，让它指向另一个 int 对象（或 const int 对象）。
+
+// 2. int const* p2
+// 与第一行完全相同。在C++中，const 关键字的位置在类型名和*之间或之后是等价的，所以 int const* 和 const int* 都表示指针指向的对象是 const 的。p2 同样不能用来修改它所指向对象的内容，但 p2 本身的值（即它所指向的地址）是可以改变的。
+
+// 3. int* const p3
+// p3 是一个 const 指针，它指向一个 int 类型的对象。即p3指针本身是const的，这意味着 p3 指向的地址是固定的，你不能改变 p3 让它指向另一个对象。但是，可以通过 p3 修改它所指向的 int 对象的内容（除非该对象本身也是 const 的）。
+
+// 4.const int* const p4
+// p4是一个const指针，它指向一个const int类型的对象。即p4指向的对象是const的，p4指针本身也是const的，这意呀着既不能改变指针的指向，也不能通过该指针修改对象的内容。
+
+
+
+
 void main0() {
     extern int externalVar; // 声明具有外部链接的变量
-    function1();
+    function1();    //调用function1函数，function1函数中定义了static变量staticVar，const变量constVar，mutable变量mutableVar，thread_local变量threadVar
 }
 
 //--------------------------------
+// 这个类 MyType 用于封装一个整数数据，并提供一些操作该数据的方法。
 class MyType {
 public:
-    MyType(int value) : data(value){}
+    // 构造函数，接受一个整数值并将其赋值给成员变量 data
+    MyType(int value) : data(value) {}  //这里的:表示初始化列表，data(value)表示将value的值赋给data，{}表示初始化列表结束
+    //也可以写成
+    // MyType(int value){
+    //     data = value;
+    // }
+    
+    // 成员函数 getData，返回 data 的值，const 表示该函数不会修改对象的状态
     int getData() const { return data; }
-    // 这里加 const，表示这个转型操作符函数不会修改对象的状态，即它是一个常量成员函数
+    
+    // 转型操作符函数，将 MyType 对象转换为 int 类型
+    // const 表示这个函数不会修改对象的状态
     operator int() const { return data; }       
 private:
-    int data;
+    int data; // 私有成员变量，用于存储整数数据
 };
+
 void gogo() {
-    // 直接初始化
-    MyType obj1(42);    //调用构造函数
-    // 复制初始化
+    // 直接初始化 MyType 对象 obj1，调用构造函数并传入 42
+    MyType obj1(42);    
+    // 复制初始化 MyType 对象 obj2，使用整数 42
     MyType obj2 = 42;
-    int hh = obj2;  //调用类的operator int()
-    // 调用成员函数获取数据
+    
+    // 将 obj2 转换为 int 类型，调用类的 operator int() 函数
+    int hh = obj2;  
+    
+    // 输出 obj1 和 obj2 的数据
     std::cout << "obj1 data: " << obj1.getData() << std::endl;
     std::cout << "obj2 data: " << obj2.getData() << std::endl;
 }
 //--------------------------------
-void go() {
-    // c();       
-    //  X x;
-    //  x.hello();
-    // x.data();
-    //range();    range1();
+void go() {     
+    X x;
+    x.hello();
+    x.data();
+    range();    range1();
     main0();
     gogo();
 }

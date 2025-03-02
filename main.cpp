@@ -1,13 +1,15 @@
 #include <iostream>
 #include "go.cpp"
-// #include "all.cpp"
-
+using namespace std;
+#include "all.cpp"
+#include "learn.cpp"
 
 // int main() {
-//   // std::cout << "Hello World!\n";
+//   std::cout << "Hello World!\n";
 //   go();
-//   // X x;
-//   // x.hello();
+//   fun();
+// //   X x;
+// //   x.hello();
 // }
 //-----------------------------------------------
 //3101
@@ -28,7 +30,7 @@
 //     root->right->left = new TreeNode(3);
 
 //     vector<int> result = inorderTraversal(root);
-//     for(int val : result) {   //forµÄÌõ¼ş£ºÖ¸¶¨Ò»¸öÈİÆ÷£¬È»ºó±éÀúÕâ¸öÈİÆ÷ÖĞµÄÃ¿¸öÔªËØ£¬valÊÇÈİÆ÷ÖĞµÄÃ¿¸öÔªËØ
+//     for(int val : result) {   //forçš„æ¡ä»¶ï¼šæŒ‡å®šä¸€ä¸ªå®¹å™¨ï¼Œç„¶åéå†è¿™ä¸ªå®¹å™¨ä¸­çš„æ¯ä¸ªå…ƒç´ ï¼Œvalæ˜¯å®¹å™¨ä¸­çš„æ¯ä¸ªå…ƒç´ 
 //         cout << val << " ";
 //     }
 //     cout << endl;
@@ -51,7 +53,7 @@
 //     // Define nodes p and q as described in example 1
 //     TreeNode* p = root->right->left;
 //     TreeNode* q = root->left->right->right;
-//     //5Óë7µÄ×î½ü¹«¹²×æÏÈÊÇ6
+//     //5ä¸7çš„æœ€è¿‘å…¬å…±ç¥–å…ˆæ˜¯6
 //     // Call the function lowestCommonAncestor
 //     TreeNode* result = BSTAncestor(root, p, q);
 //     TreeNode* result1 = lowestCommonAncestor(root, p, q);
@@ -102,7 +104,7 @@
 //
 //     // Example 1
 //     int n1 = 3;
-//     vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //ÕâÀïµÄvector<vector<int>>±íÊ¾µÄÊÇÒ»¸ö¶şÎ¬Êı×é£¬¼´Ò»¸öÊı×éÖĞµÄÃ¿¸öÔªËØÓÖÊÇÒ»¸öÊı×é.Óëint **Ïà±È,
+//     vector<vector<int>> edges1 = {{0,1,2},{1,2,1},{0,2,4}}; //è¿™é‡Œçš„vector<vector<int>>è¡¨ç¤ºçš„æ˜¯ä¸€ä¸ªäºŒç»´æ•°ç»„ï¼Œå³ä¸€ä¸ªæ•°ç»„ä¸­çš„æ¯ä¸ªå…ƒç´ åˆæ˜¯ä¸€ä¸ªæ•°ç»„.ä¸int **ç›¸æ¯”,
 //     vector<int> disappear1 = {1,1,5};
 //     vector<int> result1 = solution.minimumTime(n1, edges1, disappear1);
 //
@@ -216,17 +218,17 @@
 //
 //     return 0;
 // }
-//Éı¼¶
+//å‡çº§
 // int main() {
-//     // ¶¨ÒåÊäÈë
+//     // å®šä¹‰è¾“å…¥
 //     vector<int> nums = {1, 1, 3, 3};
 //     vector<int> moveFrom = {1, 3, 3};
 //     vector<int> moveTo = {2, 2 ,2};
 //
-//     // µ÷ÓÃº¯Êı
+//     // è°ƒç”¨å‡½æ•°
 //     vector<int> result = relocateMarbles1(nums, moveFrom, moveTo);
 //
-//     // Êä³ö½á¹û
+//     // è¾“å‡ºç»“æœ
 //     cout << "Final positions of marbles: ";
 //     for (int pos : result) {
 //         cout << pos << " ";
@@ -242,10 +244,10 @@
 //
 // int main() {
 //     string num;
-//     cout << "ÇëÊäÈëÒ»¸öÊı×Ö×Ö·û´®: ";
+//     cout << "è¯·è¾“å…¥ä¸€ä¸ªæ•°å­—å­—ç¬¦ä¸²: ";
 //     cin >> num;
 //     int result = minimumOperations(num);
-//     cout << "×îÉÙĞèÒªµÄ²Ù×÷´ÎÊı: " << result << endl;
+//     cout << "æœ€å°‘éœ€è¦çš„æ“ä½œæ¬¡æ•°: " << result << endl;
 //     return 0;
 // }
 // int main() {
@@ -258,7 +260,7 @@
 //3011
 // #include <iostream>
 // #include <vector>
-//
+
 // int main() {
 //     vector<int> nums = {8, 4, 2, 30, 15};
 //     bool result = canSortArray(nums);
@@ -271,7 +273,7 @@
 //     string s = "zbbz";
 //     int k = 3;
 //     string result = getSmallestString(s, k);
-//     cout << result << endl; // Êä³ö: aaaz
+//     cout << result << endl; // è¾“å‡º: aaaz
 //     return 0;
 // }
 //-------------------------------------
@@ -354,10 +356,10 @@
 //     vector<string> dictionary = {"hello", "leetcode"};
 //     magicDictionary.buildDict(dictionary);
 //     cout << boolalpha;
-//     //boolalphaÓÃÓÚ¿ØÖÆÊä³öboolÀàĞÍÊ±£¬Êä³ötrue»òfalse£¬¶ø²»ÊÇ1»ò0
-//     //ÀàËÆµÄ£¬boolalphaÒ²¿ÉÒÔÓÃÓÚÊäÈë£¬½«ÊäÈëµÄtrue»òfalse×ª»»ÎªboolÀàĞÍ
-//     //Èç:cin >> boolalpha;
-//     //µ±ÊäÈëtrueÊ±£¬cin»á½«Æä×ª»»ÎªboolÀàĞÍµÄtrue
+//     //boolalphaç”¨äºæ§åˆ¶è¾“å‡ºboolç±»å‹æ—¶ï¼Œè¾“å‡ºtrueæˆ–falseï¼Œè€Œä¸æ˜¯1æˆ–0
+//     //ç±»ä¼¼çš„ï¼Œboolalphaä¹Ÿå¯ä»¥ç”¨äºè¾“å…¥ï¼Œå°†è¾“å…¥çš„trueæˆ–falseè½¬æ¢ä¸ºboolç±»å‹
+//     //å¦‚:cin >> boolalpha;
+//     //å½“è¾“å…¥trueæ—¶ï¼Œcinä¼šå°†å…¶è½¬æ¢ä¸ºboolç±»å‹çš„true
 //     cout << magicDictionary.search("hello") << endl;    // false
 //     cout << magicDictionary.search("hhllo") << endl;    // true
 //     cout << magicDictionary.search("hell") << endl;     // false
@@ -374,17 +376,104 @@
 // }
 //--------------------------------------
 //3152
-int main()
-{
-    vector<int> nums = {4,3,1,6};
-    vector<vector<int>> queries = {{0,2},{2,3}};
+// int main()
+// {
+//     vector<int> nums = {4,3,1,6};
+//     vector<vector<int>> queries = {{0,2},{2,3}};
 
-    vector<bool> result = isArraySpecial(nums, queries);
+//     vector<bool> result = isArraySpecial(nums, queries);
 
-    for (bool b : result) {
-        cout << (b ? "true" : "false") << " ";
-    }
-    cout << endl;
+//     for (bool b : result) {
+//         cout << (b ? "true" : "false") << " ";
+//     }
+//     cout << endl;
 
+//     return 0;
+// }
+//--------------------------------------
+//64
+// int main() {
+//     // Initialize the grid
+//     std::vector<std::vector<int>> grid = {  //è¿™é‡Œä½¿ç”¨std::vector<std::vector<int>>è¡¨ç¤ºä¸€ä¸ªäºŒç»´æ•°ç»„ï¼Œå³ä¸€ä¸ªæ•°ç»„ä¸­çš„æ¯ä¸ªå…ƒç´ åˆæ˜¯ä¸€ä¸ªæ•°ç»„
+//         {1, 3, 1},
+//         {1, 5, 1},
+//         {4, 2, 1}
+//     };
+
+//     int result = minPathSum(grid);
+//     std::cout << "æœ€å°è·¯å¾„å’Œæ˜¯ï¼š" << result << std::endl;
+
+//     return 0;
+// }
+//--------------------------------------
+// 63.ä¸åŒè·¯å¾„ II
+// int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {}
+// int main(){
+//         // åˆ›å»ºä¸€ä¸ªéšœç¢ç‰©ç½‘æ ¼
+//     int m = 3, n = 3;
+//     int** obstacleGrid = (int**)malloc(m * sizeof(int*));
+//     for (int i = 0; i < m; i++) {
+//         obstacleGrid[i] = (int*)malloc(n * sizeof(int));
+//     }
+
+//     // åˆå§‹åŒ–ç½‘æ ¼
+//     int tempGrid[3][3] = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+//     for (int i = 0; i < m; i++) {
+//         for (int j = 0; j < n; j++) {
+//             obstacleGrid[i][j] = tempGrid[i][j];
+//         }
+//     }
+//     // è°ƒç”¨å‡½æ•°å¹¶è¾“å‡ºç»“æœ
+//     std::vector<std::vector<int>> obstacleGridVec(m, std::vector<int>(n));
+//     for (int i = 0; i < m; i++) {
+//         for (int j = 0; j < n; j++) {
+//             obstacleGridVec[i][j] = tempGrid[i][j];
+//         }
+//     }
+//     int result = uniquePathsWithObstacles(obstacleGridVec);
+//     std::cout << "ä¸åŒè·¯å¾„çš„æ•°é‡æ˜¯ï¼š" << result << std::endl;
+
+//     return 0;
+// }
+
+//---------------------------
+// 120. ä¸‰è§’å½¢æœ€å°è·¯å¾„å’Œ
+// int main() {
+//     // åˆ›å»ºä¸€ä¸ªä¸‰è§’å½¢
+//     std::vector<std::vector<int>> triangle = {
+//         {2},
+//         {3, 4},
+//         {6, 5, 7},
+//         {4, 1, 8, 3}
+//     };
+
+//     int result = minimumTotal(triangle);
+//     std::cout << "ä¸‰è§’å½¢çš„æœ€å°è·¯å¾„å’Œæ˜¯ï¼š" << result << std::endl;
+
+//     return 0;
+// }
+//-------------------------
+// 931. ä¸‹é™è·¯å¾„æœ€å°å’Œ
+// int main() {
+//     vector<vector<int>> matrixVec = {
+//         {2, 1, 3},
+//         {6, 5, 4},
+//         {7, 8, 9}
+//     };
+//     int result = minFallingPathSum(matrixVec);
+//     printf("ä¸‹é™è·¯å¾„çš„æœ€å°å’Œæ˜¯ï¼š%d\n", result);
+//     return 0;
+// }
+//----------------------------------------------
+// 221. æœ€å¤§æ­£æ–¹å½¢
+int main() {
+    vector<vector<char>> matrix = {
+        {'1', '0', '1', '0', '0'},
+        {'1', '0', '1', '1', '1'},
+        {'1', '1', '1', '1', '1'},
+        {'1', '0', '0', '1', '0'}
+    };
+    int result = maximalSquare(matrix);
+    cout << "æœ€å¤§æ­£æ–¹å½¢çš„é¢ç§¯æ˜¯ï¼š" << result << endl;
     return 0;
 }

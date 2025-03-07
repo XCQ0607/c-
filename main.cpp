@@ -466,14 +466,88 @@ using namespace std;
 // }
 //----------------------------------------------
 // 221. 最大正方形
+// int main() {
+//     vector<vector<char>> matrix = {
+//         {'1', '0', '1', '0', '0'},
+//         {'1', '0', '1', '1', '1'},
+//         {'1', '1', '1', '1', '1'},
+//         {'1', '0', '0', '1', '0'}
+//     };
+//     int result = maximalSquare(matrix);
+//     cout << "最大正方形的面积是：" << result << endl;
+//     return 0;
+// }
+//----------------------------------------------
+//5.最长回文子串
+// int main() {
+//     Solution2 solution1;
+    
+//     // 测试用例1
+//     std::string s1 = "babad";
+//     std::string result1 = solution1.longestPalindrome(s1);
+//     std::cout << "输入: " << s1 << std::endl;
+//     std::cout << "输出: " << result1 << std::endl;
+    
+//     // 测试用例2
+//     std::string s2 = "cbbd";
+//     std::string result2 = solution1.longestPalindrome(s2);
+//     std::cout << "输入: " << s2 << std::endl;
+//     std::cout << "输出: " << result2 << std::endl;
+    
+//     return 0;
+// }
+//----------------------------------------------
+//139. 单词拆分
+// #include <iostream>
+// #include <string>
+// #include <vector>
+
+// int main() {
+    
+//     // 测试用例1
+//     std::string s1 = "leetcode";
+//     std::vector<std::string> wordDict1 = {"leet", "code"};
+//     bool result1 = wordBreak(s1, wordDict1);
+//     std::cout << "输入: s = \"" << s1 << "\", wordDict = [\"leet\", \"code\"]" << std::endl;
+//     std::cout << "输出: " << (result1 ? "true" : "false") << std::endl;
+    
+//     // 测试用例2
+//     std::string s2 = "applepenapple";
+//     std::vector<std::string> wordDict2 = {"apple", "pen"};
+//     bool result2 = wordBreak(s2, wordDict2);
+//     std::cout << "\n输入: s = \"" << s2 << "\", wordDict = [\"apple\", \"pen\"]" << std::endl;
+//     std::cout << "输出: " << (result2 ? "true" : "false") << std::endl;
+    
+//     // 测试用例3
+//     std::string s3 = "catsandog";
+//     std::vector<std::string> wordDict3 = {"cats", "dog", "sand", "and", "cat"};
+//     bool result3 = wordBreak(s3, wordDict3);
+//     std::cout << "\n输入: s = \"" << s3 << "\", wordDict = [\"cats\", \"dog\", \"sand\", \"and\", \"cat\"]" << std::endl;
+//     std::cout << "输出: " << (result3 ? "true" : "false") << std::endl;
+    
+//     return 0;
+// }
+//----------------------------------------------
+//516. 最长回文子序列
+#include <iostream>
+#include <string>
+
 int main() {
-    vector<vector<char>> matrix = {
-        {'1', '0', '1', '0', '0'},
-        {'1', '0', '1', '1', '1'},
-        {'1', '1', '1', '1', '1'},
-        {'1', '0', '0', '1', '0'}
-    };
-    int result = maximalSquare(matrix);
-    cout << "最大正方形的面积是：" << result << endl;
+    
+    // 测试用例1
+    std::string s1 = "bbbab";
+    int result1 = longestPalindromeSubseq(s1);
+    std::cout << "输入: s = \"" << s1 << "\"" << std::endl;
+    std::cout << "输出: " << result1 << std::endl;
+    std::cout << "解释: 一个可能的最长回文子序列为 \"bbbb\"。" << std::endl;
+    
+    // 测试用例2
+    std::string s2 = "cbbd";
+    int result2 = longestPalindromeSubseq(s2);
+    std::cout << "\n输入: s = \"" << s2 << "\"" << std::endl;
+    std::cout << "输出: " << result2 << std::endl;
+    std::cout << "解释: 一个可能的最长回文子序列为 \"bb\"。" << std::endl;
+    
     return 0;
 }
+//----------------------------------------------

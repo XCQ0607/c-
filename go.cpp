@@ -1039,3 +1039,120 @@ int maximalSquare(vector<vector<char>>& matrix) {
     return ans*ans;
 }
 //----------------------------------------------
+//5.最长回文子串
+#include <string>
+#include <iostream>
+
+class Solution2
+{
+private:
+    // 辅助函数：从字符串s的left和right位置向两边扩展，找到最长的回文子串
+    void expandAroundCenter(const string& s, int left, int right, int& start, int& maxLen) {
+        while (left >= 0 && right < s.length() && s[left] == s[right]) {
+            left--;
+            right++;
+        }
+        // 回文的长度
+        int currentLen = right - left - 1;
+        // 如果找到更长的回文子串，更新起始位置和长度
+        if (currentLen > maxLen) {
+            maxLen = currentLen;
+            start = left + 1;
+        }
+    }
+
+public:
+    string longestPalindrome(string s) {
+        int n = s.length();
+        if (n == 0) return "";
+        
+        int start = 0; // 最长回文子串的起始位置
+        int maxLen = 1; // 最长回文子串的长度，至少为1
+        
+        for (int i = 0; i < n; i++) {
+            // 以s[i]为中心的奇数长度回文子串
+            expandAroundCenter(s, i, i, start, maxLen);
+            // 以s[i]和s[i+1]之间的空隙为中心的偶数长度回文子串
+            if (i < n - 1) {
+                expandAroundCenter(s, i, i + 1, start, maxLen);
+            }
+        }
+        
+        return s.substr(start, maxLen);
+    }
+};
+
+//C++语言中用.length()表示字符串的长度
+//C语言中用strlen(s)表示字符串的长度,不包括\0
+//C语言中用sizeof(s)表示字符串的长度,包括\0
+
+//substr(start,length)表示从start位置开始，长度为length的子串
+
+//----------------------------------------------
+//139. 单词拆分
+
+#include <string>
+#include <vector>
+#include <unordered_set>
+
+
+bool wordBreak(std::string s, std::vector<std::string>& wordDict) {
+    int len = s.length();
+    
+    // 将字典转换为哈希集合以提高查询效率
+    std::unordered_set<std::string> wordSet(wordDict.begin(), wordDict.end());
+    
+    // dp[i] 表示 s 的前 i 个字符是否可以被拆分
+    std::vector<bool> dp(len + 1, false);
+    
+    // 空字符串可以被拆分
+    dp[0] = true;
+    
+    // 填充 dp 数组
+    for (int i = 1; i <= len; i++) {
+        for (int j = 0; j < i; j++) {
+            // 如果前 j 个字符可以被拆分，并且子串 s[j...i-1] 在字典中
+            if (dp[j] && wordSet.count(s.substr(j, i - j))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    
+    return dp[len];
+}
+//----------------------------------------------
+// 516. 最长回文子序列
+#include <string>
+#include <vector>
+#include <algorithm>
+
+
+int longestPalindromeSubseq(std::string s) {
+    int len = s.length();
+    
+    // 创建二维动态规划数组，使用vector自动管理内存
+    std::vector<std::vector<int>> dp(len, std::vector<int>(len, 0));
+    
+    // 初始化：单个字符的回文子序列长度为1
+    for (int i = 0; i < len; i++) {
+        dp[i][i] = 1;
+    }
+    
+    // 填充 dp 数组
+    // 外层循环为子序列长度减1，从1开始（即实际长度从2开始）
+    for (int l = 1; l < len; l++) {
+        for (int i = 0; i < len - l; i++) {
+            int j = i + l;
+            if (s[i] == s[j]) {
+                dp[i][j] = dp[i+1][j-1] + 2;
+            } else {
+                dp[i][j] = std::max(dp[i+1][j], dp[i][j-1]);
+            }
+        }
+    }
+    
+    return dp[0][len-1];
+}
+
+//----------------------------------------------
